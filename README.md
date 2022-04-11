@@ -27,7 +27,7 @@ Os assuntos vistos em aula serão listados aqui.
 
 |    N |   data | assunto
 | ---: | :----: | :--------
-|    1 | 11abr  | introdução / revisão / primeiro trabalho
+|    1 | 11abr  | introdução / revisão / pt1 do [primeiro trabalho de revisão](https://github.com/BenhurUFSM/ed21a/blob/main/Trabalhos/T1.md)
 
 <!--
 |    1 |  19mai | introdução
@@ -57,6 +57,7 @@ Os assuntos vistos em aula serão listados aqui.
 
 |     N |    prazo | assunto
 | ----: | -------: | :-----------
+|   t1a | trazer dúvidas para a aula de 13abr | ler o arquivo de palavras
 
 <!--
 |    t1 |  9jun10h | ver [aula 3](https://github.com/BenhurUFSM/ed21a/blob/main/Assuntos/03.md)
@@ -82,9 +83,9 @@ Estruturas de Dados em C, Uma Abordagem Didática - Sílvio Pereira
 
 <!--
 ## Material Auxiliar
+-->
 
 ## Avaliações etc
 
-Veja a [planilha](https://docs.google.com/spreadsheets/d/1nILaDGpw5bubqg4wCa-9ujhaFy-4n7DXm3zr6samI_0/edit?usp=sharing)
--->
+Veja a [planilha](https://docs.google.com/spreadsheets/d/1mR_EDFlGTIz5pMNLANQukv4nFyMJAL_hqspNuCAxSRQ/edit?usp=sharing)
 
