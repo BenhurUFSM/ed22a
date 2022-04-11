@@ -15,10 +15,9 @@ O e-mail pode ser usado para o envio de perguntas, exercícios, reclamações, s
 
 Esta página concentrará os assuntos vistos em aula, a descrição de exercícios e trabalhos, avaliações, etc. Ela estará sendo aumentada/atualizada durante todo o semestre. Ela é o canal mais oficial de informações sobre a disciplina.
 
-A disciplina será desenvolvida de uma forma bastante prática, a principal forma de avaliação dos alunos será através de exercícios, o desenvolvimento de pequenos programas de computador, a serem enviados para o professor. 
-Durante o semestre, esses programas serão revisados e comentados pelo professor, individualmente ou de forma coletiva. 
-Os programas podem ser reenviados quantas vezes o aluno quiser, para resolver dúvidar ou pedir sugestões.
-No final do semestre, deve ser desenvolvido um trabalho final um pouco mais complexo.
+A disciplina será desenvolvida de uma forma bastante prática, os alunos devem desenvolver pequenos programas de computador, a serem enviados para o professor em datas definidas. 
+Esses programas serão revisados e comentados pelo professor, individualmente ou de forma coletiva. 
+Os programas podem ser corrigidos e reenviados quantas vezes o aluno quiser, para resolver dúvidas ou pedir sugestões.
 A avaliação será feita no final do semestre, quando cada aluno deve entregar a versão final de um conjunto dos trabalhos desenvolvidos durante o semestre e uma auto-avaliação justificada. Esse material final será usado pelo professor para gerar a nota final de cada aluno.
 Para quem precisar, o exame será uma prova escrita.
 
