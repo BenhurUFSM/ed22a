@@ -28,6 +28,7 @@ Os assuntos vistos em aula serão listados aqui.
 |    N |   data | assunto
 | ---: | :----: | :--------
 |    1 | 11abr  | introdução / revisão / pt1 do [primeiro trabalho de revisão](Trabalhos/t1.md)
+|    2 | 13abr  | revisão, cont (vimos um pedaço da pt1)
 
 <!--
 |    1 |  19mai | introdução
@@ -58,6 +59,7 @@ Os assuntos vistos em aula serão listados aqui.
 |     N |    prazo | assunto
 | ----: | -------: | :-----------
 |   t1a | trazer dúvidas para a aula de 13abr | ler o arquivo de palavras
+|   t1b | trazer dúvidas para a aula de 18abr | t1a+suporte a palavras usadas
 
 <!--
 |    t1 |  9jun10h | ver [aula 3](https://github.com/BenhurUFSM/ed21a/blob/main/Assuntos/03.md)
