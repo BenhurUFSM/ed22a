@@ -27,7 +27,7 @@ Os assuntos vistos em aula serão listados aqui.
 
 |    N |   data | assunto
 | ---: | :----: | :--------
-|    1 | 11abr  | introdução / revisão / pt1 do [primeiro trabalho de revisão](https://github.com/BenhurUFSM/ed21a/blob/main/Trabalhos/T1.md)
+|    1 | 11abr  | introdução / revisão / pt1 do [primeiro trabalho de revisão](Trabalhos/t1.md)
 
 <!--
 |    1 |  19mai | introdução
