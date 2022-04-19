@@ -1,6 +1,14 @@
+// Programa exemplo para ler o arquivo de palavras (para implementar algo semelhante ao wordle)
 #include <stdio.h>
 #include <stdbool.h>
 
+// tipo de dados para armazenar uma palavra. 
+// cada palavra tem 5 letras, e é colocada em 2 versões: com e sem acento.
+// os acentos estão codificados em UTF-8, em que um letra acentuada do português é codificada em 2 bytes.
+// É usado um vetor de 10 bytes para armazenar a palavra com acento, suportando até 5 letras acentuadas.
+// O primeiro byte não usado (se houver) é preenchido com 0.
+// Em todos os acentos usados no arquivo, o primeiro byte de uma letra acentuada tem o valor 195.
+// Além das duas versões da palavra, tem um boolpara dizer se a palavra já foi escolhida ou ainda não.
 typedef struct {
     unsigned char com_acento[10];
     char sem_acento[5];
@@ -80,7 +88,7 @@ void imprime_palavra(palavra_t *palavra)
 
 int main()
 {
-    palavra_t palavras[7877];
+    palavra_t palavras[7877]; // tem esse tanto de palavras no arquivo; alterar se o arquivo mudar.
     FILE *a;
     a = fopen("palavras-de-5-letras", "r");
     if (a == NULL) {
