@@ -7,6 +7,8 @@ typedef struct {
     bool usada;
 } palavra_t;
 
+// Converte o segundo byte de uma caractere acentuado em UTF-8 para o caractere não acentuado correspondente
+// Função BEM meia boca, só funciona para os caracteres selecionados, que são os existentes no arquivo de palavras.
 char tira_acento(unsigned char c)
 {
     unsigned char ac[] = "áâãéêíóôõúç";
@@ -18,6 +20,10 @@ char tira_acento(unsigned char c)
     return c;
 }
 
+// lê a próxima palavra do arquivo; retorna true se sucesso
+// No arquivo tem uma palavra acentuada (5 caracteres, codificados em até 10 bytes),
+//   opcionalmente seguido por um ponto (para indicar que já foi usada),
+//   obrigatoriamente seguido por um fim de linha.
 bool le_palavra(FILE *arquivo, palavra_t *palavra)
 {
     int c;
