@@ -29,9 +29,11 @@ Poderíamos ter as seguintes operações sobre essas variáveis:
   p->i = 10; // altera o campo i do registro r1
   
   q->s = n; // altera o campo s de r2 (faz ele apontar para o primeiro caractere do vetor n, ele estava apontando para o primeiro caractere da string constante "teste", para onde o campo s de r1 ainda está apontado)
-  n[2] = *r1.s; // n (e r2.s) agora valem "stting"
-  r2.s[2] = *r1.s; // faz o mesmo que a linha anterior
-  q2->s[2] = *q1->s; // faz o mesmo que a linha anterior
-  q2->s[2] = q1->s[0]; // faz o mesmo que a linha anterior
-  q1->s[2] = q2->s[0]; // não permitido, r1.s está apontando para uma string constante, que não pode ser alterada
+  n[0] = *r1.s; // n (e r2.s) agora valem "ttring"
+  r2.s[0] = *r1.s; // faz o mesmo que a linha anterior
+  *r2.s = *r1.s; // faz o mesmo que a linha anterior
+  q2->s[0] = *q1->s; // faz o mesmo que a linha anterior
+  *q2->s = q1->s[0]; // faz o mesmo que a linha anterior
+  q2->s[0] = q1->s[0]; // faz o mesmo que a linha anterior
+  q1->s[0] = q2->s[0]; // não permitido, r1.s está apontando para uma string constante, que não pode ser alterada
 ```
