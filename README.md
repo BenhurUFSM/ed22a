@@ -30,7 +30,7 @@ Os assuntos vistos em aula serão listados aqui.
 |    1 | 11abr  | introdução / revisão / pt1 do [primeiro trabalho de revisão](Trabalhos/t1.md)
 |    2 | 13abr  | revisão, cont (vimos um pedaço da pt1)
 |    3 | 18abr  | revisão, cont (vimos mais um pedaço da pt1 e 2; o programa feito em aula tá no github)
-|    4 | 20abr  | revisão, cont (falamos sobre ponteiros, em especial para structs; função para sortear uma palavra do wordle)
+|    4 | 20abr  | revisão, cont (falamos sobre [ponteiros, em especial para structs](Assuntos/ponteiros-para-registros.md); função para sortear uma palavra do wordle)
 
 <!--
 |    1 |  19mai | introdução
