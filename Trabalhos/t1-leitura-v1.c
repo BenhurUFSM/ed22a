@@ -127,7 +127,9 @@ int main()
         printf("problema na contagem das palavras\n");
         return 2;
     }
-	
+
+    palavra_t *sorteada = sorteia_palavra(np, palavras);
+
     while (true) {
         char s[6];
         printf("digite uma palavra de 5 letras: ");
@@ -139,9 +141,15 @@ int main()
         } else {
             printf("Encontrei sua palavra: ");
             imprime_palavra(pal);
+            if (pal == sorteada) {
+                printf("muito bem, é igual à sorteada!\n");
+                sorteada = sorteia_palavra(np, palavras);
+                printf("\nsorteei outra. Boa sorte.\n")
+            } else {
+                printf("errou! tente de novo.\n")
+            }
         }
     }
-
 
     return 0;
 }
