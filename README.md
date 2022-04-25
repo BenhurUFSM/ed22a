@@ -31,6 +31,7 @@ Os assuntos vistos em aula serão listados aqui.
 |    2 | 13abr  | revisão, cont (vimos um pedaço da pt1)
 |    3 | 18abr  | revisão, cont (vimos mais um pedaço da pt1 e 2; o programa feito em aula tá no github)
 |    4 | 20abr  | revisão, cont (falamos sobre [ponteiros, em especial para structs](Assuntos/ponteiros-para-registros.md); função para sortear uma palavra do wordle)
+|    5 | 25abr  | revisão, cont
 
 <!--
 |    1 |  19mai | introdução
@@ -64,6 +65,7 @@ Os assuntos vistos em aula serão listados aqui.
 |   t1b | trazer dúvidas para a aula de 18abr | t1a+suporte a palavras usadas
 |   t1c | trazer dúvidas para a aula de 20abr | sorteio de uma palavra
 |   t1d |          | busca de uma palavra (para encontrar a palavra digitada pelo jogador)
+|   t1  | 01mai    | [wordle](Trabalhos/t1.md)
 
 <!--
 |    t1 |  9jun10h | ver [aula 3](https://github.com/BenhurUFSM/ed21a/blob/main/Assuntos/03.md)
