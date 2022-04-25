@@ -41,6 +41,7 @@ bool le_palavra(FILE *arquivo, palavra_t *palavra)
     palavra->usada = false;
     for (;;) {
         c = fgetc(arquivo);
+	if (c == '\r') continue;
         if (c == EOF) return false;
         if (c == '\n') {
             break;
