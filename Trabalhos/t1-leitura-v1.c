@@ -1,6 +1,7 @@
 // Programa exemplo para ler o arquivo de palavras (para implementar algo semelhante ao wordle)
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 // tipo de dados para armazenar uma palavra. 
 // cada palavra tem 5 letras, e é colocada em 2 versões: com e sem acento.
@@ -85,6 +86,23 @@ void imprime_palavra(palavra_t *palavra)
     
 }
 */
+
+// sorteia uma palavra que ainda nao tenha sido usada
+palavra_t *sorteia_palavra(int npal, palavra_t palavras[npal])
+{
+    palavra_t *sorteada;
+    do {
+	sorteada = &palavras[rand()%npal];
+    } while (sorteada->usada);
+    return sorteada;
+}
+
+// busca uma palavra no vetor de palavras.
+// retorna um ponteiro para palavra_t que contém a palavra, ou NULL
+palavra_t *busca_palavra(int npal, palavra_t palavras[npal], char buscada[5])
+{
+    return NULL;
+}
 
 int main()
 {
