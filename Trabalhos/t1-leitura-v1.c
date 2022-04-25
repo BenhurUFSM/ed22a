@@ -127,14 +127,21 @@ int main()
         printf("problema na contagem das palavras\n");
         return 2;
     }
-    for (int i = 0; i<np; i++) {
-        imprime_palavra(&palavras[i]);
-        putchar(' ');
+	
+    while (true) {
+        char s[6];
+        printf("digite uma palavra de 5 letras: ");
+        scanf("%s", s);
+        palavra_t *pal;
+        pal = busca_palavra(np, palavras, s);
+        if (pal == NULL) {
+            printf("palavra '%s' não encontrada\n", s);
+        } else {
+            printf("Encontrei sua palavra: ");
+            imprime_palavra(pal);
+        }
     }
-    
-    // vetor de le_palavras
-    // le o vetor
-    // mostra algumas palavras lidas, para ver se está funcionando
+
 
     return 0;
 }
