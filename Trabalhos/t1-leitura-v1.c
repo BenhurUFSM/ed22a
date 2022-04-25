@@ -16,6 +16,11 @@ typedef struct {
     bool usada;
 } palavra_t;
 
+// o vetor de palavras.
+// o onlineGDB não gosta de vetores tão grandes como variável local,
+// por isso está sendo declarado como global
+palavra_t palavras[7877]; // tem esse tanto de palavras no arquivo; alterar se o arquivo mudar.
+
 // Converte o segundo byte de uma caractere acentuado em UTF-8 para o caractere não acentuado correspondente
 // Função BEM meia boca, só funciona para os caracteres selecionados, que são os existentes no arquivo de palavras.
 char tira_acento(unsigned char c)
@@ -107,7 +112,7 @@ palavra_t *busca_palavra(int npal, palavra_t palavras[npal], char buscada[5])
 
 int main()
 {
-    palavra_t palavras[7877]; // tem esse tanto de palavras no arquivo; alterar se o arquivo mudar.
+    // palavra_t palavras[7877]; // foi declarado como global por uma limitacao do onlinegdm
     FILE *a;
     a = fopen("palavras-de-5-letras", "r");
     if (a == NULL) {
