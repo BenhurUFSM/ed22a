@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <time.h>
 
 // tipo de dados para armazenar uma palavra. 
 // cada palavra tem 5 letras, e é colocada em 2 versões: com e sem acento.
@@ -98,20 +99,52 @@ palavra_t *sorteia_palavra(int npal, palavra_t palavras[npal])
 {
     palavra_t *sorteada;
     do {
-	sorteada = &palavras[rand()%npal];
+        sorteada = &palavras[rand()%npal];
     } while (sorteada->usada);
     return sorteada;
+}
+
+bool iguais(char a[5], char b[5])
+{
+    for (int i=0; i<5; i++) {
+        if (a[i] != b[i]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 // busca uma palavra no vetor de palavras.
 // retorna um ponteiro para palavra_t que contém a palavra, ou NULL
 palavra_t *busca_palavra(int npal, palavra_t palavras[npal], char buscada[5])
 {
+    for (int i=0; i<npal; i++) {
+        if (iguais(palavras[i].sem_acento, buscada)) {
+            return &palavras[i];
+        }
+    }
     return NULL;
+}
+
+// sequencias ANSI para selecionar cor das letras
+// ESC[ 38;2;⟨r⟩;⟨g⟩;⟨b⟩ m Select RGB foreground color
+// ESC[ 48;2;⟨r⟩;⟨g⟩;⟨b⟩ m Select RGB background color
+void cor_de_fundo(int vm, int vd, int az)
+{
+    printf("%c[48;2;%d;%d;%dm", 27, vm, vd, az);
+}
+void cor_da_letra(int vm, int vd, int az)
+{
+    printf("%c[38;2;%d;%d;%dm", 27, vm, vd, az);
+}
+void cor_default(void)
+{
+    printf("%c[m", 27);
 }
 
 int main()
 {
+    srand(time(0));
     // palavra_t palavras[7877]; // foi declarado como global por uma limitacao do onlinegdm
     FILE *a;
     a = fopen("palavras-de-5-letras", "r");
@@ -127,28 +160,35 @@ int main()
         printf("problema na contagem das palavras\n");
         return 2;
     }
-
+    
     palavra_t *sorteada = sorteia_palavra(np, palavras);
 
     while (true) {
         char s[6];
         printf("digite uma palavra de 5 letras: ");
+        printf("Dica: tente '");
+        imprime_palavra(sorteada);
+        printf("'\n");
         scanf("%s", s);
         palavra_t *pal;
         pal = busca_palavra(np, palavras, s);
         if (pal == NULL) {
-            printf("palavra '%s' não encontrada\n", s);
+            cor_da_letra(255,0,0);
+            printf("palavra '%s' nao encontrada\n", s);
         } else {
+            cor_da_letra(0,255,0);
             printf("Encontrei sua palavra: ");
             imprime_palavra(pal);
             if (pal == sorteada) {
-                printf("muito bem, é igual à sorteada!\n");
+                printf("\nmuito bem, é igual a sorteada!\n");
                 sorteada = sorteia_palavra(np, palavras);
-                printf("\nsorteei outra. Boa sorte.\n")
+                printf("\nsorteei outra. Boa sorte.\n");
             } else {
-                printf("errou! tente de novo.\n")
+                cor_de_fundo(200,50,50);
+                printf("\nerrou! tente de novo.\n");
             }
         }
+        cor_default();
     }
 
     return 0;
