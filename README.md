@@ -32,6 +32,7 @@ Os assuntos vistos em aula serão listados aqui.
 |    3 | 18abr  | revisão, cont (vimos mais um pedaço da pt1 e 2; o programa feito em aula tá no github)
 |    4 | 20abr  | revisão, cont (falamos sobre [ponteiros, em especial para structs](Assuntos/ponteiros-para-registros.md); função para sortear uma palavra do wordle)
 |    5 | 25abr  | revisão, cont
+|    6 | 27abr  | revisão, cont (falamos sobre [alocação dinâmica](Assuntos/alocacao-dinamica.md), [TAD](Assuntos/tad.md)
 
 <!--
 |    1 |  19mai | introdução
