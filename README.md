@@ -68,7 +68,7 @@ Os assuntos vistos em aula serão listados aqui.
 |   t1c | trazer dúvidas para a aula de 20abr | sorteio de uma palavra
 |   t1d |          | busca de uma palavra (para encontrar a palavra digitada pelo jogador)
 |   t1  | 1mai     | [wordle](Trabalhos/t1.md)
-|  t1v2 | 3mai     | Implemente o que falta em [wordle, v2](Trabalhos/t1-v2.c)
+|   t2  | 3mai     | Implemente o que falta em [wordle, v2](Trabalhos/t1-v2.c)
 
 <!--
 |    t1 |  9jun10h | ver [aula 3](https://github.com/BenhurUFSM/ed21a/blob/main/Assuntos/03.md)
