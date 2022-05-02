@@ -33,6 +33,7 @@ Os assuntos vistos em aula serão listados aqui.
 |    4 | 20abr  | revisão, cont (falamos sobre [ponteiros, em especial para structs](Assuntos/ponteiros-para-registros.md); função para sortear uma palavra do wordle)
 |    5 | 25abr  | revisão, cont
 |    6 | 27abr  | revisão, cont (falamos sobre [alocação dinâmica](Assuntos/alocacao-dinamica.md) de memória, e um pouco sobre [tipos abstratos de dados](Assuntos/tad.md))
+|    7 | 2mai  | revisão, fim (falamos sobre a implementação do t1 -- ver t1-v2.c)
 
 <!--
 |    1 |  19mai | introdução
@@ -66,7 +67,8 @@ Os assuntos vistos em aula serão listados aqui.
 |   t1b | trazer dúvidas para a aula de 18abr | t1a+suporte a palavras usadas
 |   t1c | trazer dúvidas para a aula de 20abr | sorteio de uma palavra
 |   t1d |          | busca de uma palavra (para encontrar a palavra digitada pelo jogador)
-|   t1  | 01mai    | [wordle](Trabalhos/t1.md)
+|   t1  | 1mai     | [wordle](Trabalhos/t1.md)
+|  t1v2 | 3mai     | Implemente o que falta em [wordle, v2](Trabalhos/t1v2.c)
 
 <!--
 |    t1 |  9jun10h | ver [aula 3](https://github.com/BenhurUFSM/ed21a/blob/main/Assuntos/03.md)
