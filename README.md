@@ -34,6 +34,7 @@ Os assuntos vistos em aula serão listados aqui.
 |    5 | 25abr  | revisão, cont
 |    6 | 27abr  | revisão, cont (falamos sobre [alocação dinâmica](Assuntos/alocacao-dinamica.md) de memória, e um pouco sobre [tipos abstratos de dados](Assuntos/tad.md))
 |    7 | 2mai  | revisão, fim (falamos sobre a implementação do t1 -- ver t1-v2.c)
+|    8 | 4mai  | [Implementação de TAD em C](Assuntos/tad.md)
 
 <!--
 |    1 |  19mai | introdução
