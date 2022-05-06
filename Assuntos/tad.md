@@ -156,6 +156,7 @@ O arquivo `data.c`
 Um possível cliente:
 ```c
    #include "data.h"
+   #include <stdio.h>
    
    int main()
    {
