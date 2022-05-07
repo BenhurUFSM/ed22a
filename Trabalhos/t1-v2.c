@@ -76,6 +76,7 @@ void cor_default(void)
     printf("%c[m", 27);
 }
 
+// Escreve no arquivo "arq" a palavra apontada por "p", no formato esperado para o arquivo
 void escreve_palavra(FILE *arq, palavra_t *p)
 {
   for (int i = 0; i < 10; i++) {
@@ -86,7 +87,8 @@ void escreve_palavra(FILE *arq, palavra_t *p)
   fprintf(arq, "\n");
 }
 
-
+// escreve na tela a versão com acentos da palavra apontada por "chute", colorindo cada letra de
+//   acordo com a classificação dela no vetor "cl"
 void desenha_palavra(palavra_t *chute, classe_letra_t cl[5])
 {
   int jj = 0;
@@ -117,12 +119,17 @@ void desenha_palavra(palavra_t *chute, classe_letra_t cl[5])
   printf("\n");
 }
 
-
+// lê uma palavra do usuário,
+//   até que seja uma palavra pertencente ao dicionário (e retorna um ponteiro para essa palavra no dicionário)
+//   ou que seja a palavra especial que indica a desistência do usuário (nesse caso, retorna NULL)
+// **essa função não está completa**
 palavra_t *le_chute(dicionario_t *dic)
 {
   return dicionario_palavra_na_posicao(dic, 1);
 }
 
+// pergunta ao usuário se ele quer jogar mais uma partida e retorna true caso positivo
+// **essa função não está completa**
 bool quer_jogar_de_novo(void)
 {
   return false;
@@ -131,8 +138,7 @@ bool quer_jogar_de_novo(void)
 
 
 // -----------------------------------------------------------------------------------------
-// esta função tá sobrando (deveria ter sido incluida na interface do dicionário!)
-
+// esta função tá meio peixe fora d'água (deveria ter sido incluida na interface do dicionário!)
 void atualiza_arquivo(dicionario_t *palavras)
 {
   FILE *arq;
@@ -159,6 +165,8 @@ void atualiza_arquivo(dicionario_t *palavras)
 // -----------------------------------------------------------------------------------------
 // funções que implementam uma jogada
 
+// sorteia uma palavra que ainda não tenha sido usada, e retorna um ponteiro para a palavra no dicionário
+// **essa função não está completa**
 palavra_t *sorteio(dicionario_t *dic)
 {
   return dicionario_palavra_na_posicao(dic, 0);
@@ -192,13 +200,14 @@ bool classifica_chute(palavra_t *sorteada, palavra_t *chute,
 }
 
 
+// implementa uma partida, retorna um bool que diz se o jogador ganhou
 bool joga(dicionario_t *palavras)
 {
   bool acertou = false;
   palavra_t *sorteada = sorteio(palavras);
   sorteada->usada = true;
   atualiza_arquivo(palavras);
-  for (int jogada=0; jogada < 6; jogada++) {
+  for (int jogada = 0; jogada < 6; jogada++) {
     palavra_t *chute = le_chute(palavras);
     if (chute == NULL) break; // amarelou!
     classe_letra_t classificacao[5];
