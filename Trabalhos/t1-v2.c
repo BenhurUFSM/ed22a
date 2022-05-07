@@ -26,24 +26,38 @@ typedef struct {
 
 // -----------------------------------------------------------------------------------------
 // tipo de dados para o dicionário (está oculto e a implementação não funciona muito)
+// **falta definir a "struct dicionario"**, com os dados necessários para manter um dicionário de
+// palavras e implementar as funções abaixo
 typedef struct dicionario dicionario_t;
 
+// aloca memória para um dicionário de palavras, inicializa ele com as palavras lidas do
+// arquivo com nome "nome_arquivo"; retorna um ponteiro para o dicionário criado
+// **essa função não está completa**
 dicionario_t *dicionario_cria(char *nome_arquivo)
 {
   return NULL;
 }
+// libera a memória ocupada pelo dicionário "dic"
+// **essa função não está completa**
 void dicionario_destroi(dicionario_t *dic)
 {
 }
+// retorna o nome do arquivo de onde foram lidas as palavras que estão no dicionário "dic"
+// **essa função não está completa**
 char *dicionario_nome_arquivo(dicionario_t *dic)
 {
   return "oi";
 }
+// retorna o número de palavras existentes no dicionário "dic"
+// **essa função não está completa**
 int dicionario_numero_de_palavras(dicionario_t *dic)
 {
-  return 1;
+  return 2;
 }
+// dado criado somente para fazer de conta que tem palavras, e o programa ter um funcionamento mínimo
 palavra_t p[] = {{ "teste", "teste", false }, { "terés", "teres" }};
+// retorna um ponteiro para a palavra que está na posição "pos" do dicionário "dic"
+// **essa função não está completa**
 palavra_t *dicionario_palavra_na_posicao(dicionario_t *dic, int pos)
 {
   return &p[pos];
