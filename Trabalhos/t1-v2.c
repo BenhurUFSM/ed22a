@@ -1,6 +1,7 @@
 // ED 2022 SI2/CC2
 // Segunda versão do jogo wordle
 // Visto em aula dia 2mai
+// Comentários adicionados dia 7mai
 //
 // Implementado em abordagem descendente (top-down)
 // Com um "dicionário" escondendo a implementação do conjunto de palavras
