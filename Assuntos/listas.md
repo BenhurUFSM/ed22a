@@ -165,8 +165,9 @@ Um exemplo de implementação de uma lista com alocação estática, contígua, 
 #### Exercícios
 
 1. Faça um programa para testar a implementação de lista acima. Defina `dado_t` com `double`, por exemplo, inserindo `typedef double dado_t;` em `lista.h`. A implementação deve realizar diversas inclusões e remoções, inclusive incluindo dados quando a lista estiver cheia ou removendo quando tiver vazia. Conserte erros que encontrar (a lista foi implementada no editor, nunca sequer compilada).
-2. Altere a implementação de lista (só lista.c) para que tenha alocação dinâmica -- dobre a capacidade na inclusão quando tiver cheia, diminua a capacidade pela metade na remoção quando estiver ocupando menos de 1/3 da capacidade. Use o mesmo programa (sem alteração) para testar.
-3. Altere de novo, para que seja circular, com alocação dinâmica. Teste novamente com o mesmo programa.
+2. Em algumas implementações, posições negativas são consideradas válidas, e representam os alementos em posições a partir do final da lista (-1 é o último elemento, -2 o penúltimo etc). Altere a implementação da lista para que funcione dessa forma. Em uma lista com 2 elementos, as posições com elementos são -2, -1, 0 e 1; as posições válidas para inserção são -3, -2, -1, 0, 1 e 2.
+3. Altere a implementação de lista (só lista.c) para que tenha alocação dinâmica -- dobre a capacidade na inclusão quando tiver cheia, diminua a capacidade pela metade na remoção quando estiver ocupando menos de 1/3 da capacidade. Use o mesmo programa (sem alteração) para testar.
+4. Altere de novo, para que seja circular, com alocação dinâmica. Teste novamente com o mesmo programa.
 
 #### Lista encadeada
 
