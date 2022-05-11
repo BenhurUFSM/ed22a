@@ -171,4 +171,194 @@ Um exemplo de implementação de uma lista com alocação estática, contígua, 
 
 #### Lista encadeada
 
-Breve
+Nas implementações contíguas, a ordem física em que os dados da lista são mantidos em memória corresponde à ordem lógica desses dados na lista.
+Sabendo a posição de um dos dados, com um cálculo simples se obtém a posição de qualquer outro.
+Em compensação, se um dado muda sua posição lógica na lista (devido a inclusões ou remoções), os dados devem ser fisicamente movimentados na memória para que a correspondência seja mantida.
+
+Uma outra forma de se organizar uma lista em memória é quebrando essa correspondência, e usando uma outra forma de ser encontrar os dados da lista em vez de sua posição relativa na memória.
+A forma mais comum de se fazer isso é manter, para cada dado na lista, uma informação que permite chegar ao dado que o sucede na lista.
+Por exemplo, se os dados da lista são colocados em um vetor, a informação que permite chegar a um dado é a posição no vetor.
+Uma forma de se manter essa posição é colocando a lista em dois vetores de mesmo tamanho, um contendo espaço para os dados e outro contendo a posição do sucessor de cada dado. A posição onde está o dado que é o sucessor do dado na posição 3 do vetor de dados é colocada na posição 3 do vetor de posições. Como cada dado da lista pode estar em qualquer posição do vetor, necessitamos saber a posição do primeiro dado da lista.
+Quando uma lista é organizada desas forma, com um dado levando à informação do seguinte e assim por diante, dizemos que a lista é "encadeada".
+
+Por exemplo, nesse esquema, a lista com os dados `X Y Z` poderia ser armazenada como abaixo:
+```
+   cap 5
+   prim 2
+   num 3
+   dados       Z ? X Y ?
+   sucessores -1 ? 3 0 ?
+```
+Os sinais `?` marcam valores nos vetores que não estão sendo ocupadas pela lista.
+O primeiro dado da lista está na posição 2 (é o dado `X`).
+No vetor de sucessores, na mesma posição (2) do dado, tem o valor 3, que é a posição do dado seguinte (o segundo dado da lista).
+Na posição 3, está o valor `Y` e o sucessor é 0.
+Na posição 0 está o terceiro dado da lista `Z` e o sucessor -1. -1 é um valor especial para representar que esse dado não tem sucessor, é o último da lista.
+
+Se dessa lista fosse removido o segundo dado (na posição 1 da lista e 3 do vetor), a lista ficaria assim:
+```
+   cap 5
+   prim 2
+   num 2
+   dados       Z ? X Y ?
+   sucessores -1 ? 0 0 ?
+```
+
+Se na lista original fosse inserido o dado W na posição 1, a lista poderia ficar assim:
+```
+   cap 5
+   prim 2
+   num 4
+   dados       Z W X Y ?
+   sucessores -1 3 1 0 ?
+```
+ou assim:
+```
+   cap 5
+   prim 2
+   num 4
+   dados       Z ? X Y W
+   sucessores -1 ? 4 0 3
+```
+Tanto na inserção quanto na remoção, nenhum dado presente na lista precisou ser movimentado
+
+Claro, tem algumas desvantagens nessa implementação:
+- é necessário mais memória, para colocar informação sobre os sucessores
+- é necessário encontrar os espaços livres quando se tem uma inclusão. Uma forma de se fazer isso é organizar uma segunda lista, que contém os elementos livres, e retirar dela nas inserções, colocar nela nas remoções
+- para implementar inclusão e remoção, tem que alterar a informação de sucessor do dado na posição anterior ao ponto de inserção/remoção; para encontrar esse dado temos que percorrer a lista desde o início.
+- caso se use realocação de memória que libera espaço quando a área ocupada pela lista é muito inferior à capacidade, pode ser necessário deslocar dados que estejam na área que será liberada (já que um dado pode estar em qualquer lugar, não se tem garantia de que não tenha dado no final da área alocada), além de rearranjar a lista de livres.
+
+A alocação pode ser um pouco otimizada, colocando os valores dos sucessores junto a cada dado, e alocando um só vetor.
+
+Uma outra possibilidade de alocação de memória é alocar cada dado individualmente, e só manter alocados os que estão efetivamente em uso pela lista. Quando um dado é removido, a memória ocupada por ele é liberada. O gerenciamento de memória fica com o sistema de alocação de memória e não mais com a lista. Nesse caso, um dado pode estar em qualquer posição da memória, e sua posição é mantida por um ponteiro.
+Para cada posição, deve-se guardar, além do dado, a informação de sucessor (um ponteiro para o dado seguinte).
+Essas duas informações (dado e ponteiro) devem ser mantidas juntas, o que geralmente é feito declarando uma estrutura que contém um dado e um ponteiro para outra dessas estruturas. É usual chamar essa estrutura de "nó" ou "nodo".
+
+Nossa lista posa a ter então dois tipos de dados: uma estrutura que mantém informações gerais da lista (em geral se chama de descritor da lista) e uma estrutura para cada dado (um nó).
+
+Nessa implementação, não vamos ter memória desperdiçada com espaço não usado pela lista, mas em compensação tem memória extra gasta pelo sistema de gerenciamento de memória, que vai gerenciar um número maior de alocações.
+
+Uma implementação possível para a interface de lista vista antes, usando lista encadeada com alocação individual poderia ser:
+```c
+   #include "lista.h"
+
+   // a estrutura para conter um nó -- contém um dado e um ponteiro para o próximo nó
+   // essa estrutura é interna à implementação da lista
+   typedef struct no_t no_t;
+   struct no_t {
+     dado_t d;
+     no_t *prox;
+   };
+
+   // a estrutura para o descritor da lista -- contém um ponteiro para o nó que contém o primeiro dado da lista
+   struct lista {
+     int num;
+     no_t *prim;
+   };
+      
+   lista_t *lista_cria(int cap)
+   {
+     // cria uma lista vazia -- ignora a capacidade, a lista poderá conter tantos nós quantos couberem na memória
+     // poderia também guardar a capacidade e limitar o número máximo de dados na lista
+     lista_t *l;
+     l = malloc(sizeof(lista_t));
+     if (l != NULL) {
+       l->num = 0;
+       l->prim = NULL;
+     }
+     return l;
+   }
+   
+   void lista_destroi(lista_t *l)
+   {
+     // precisa liberar a memória de cada nó, e do descritor
+     no_t *no = l->prim;
+     while (no != NULL) {
+       // salva o ponteiro que está dentro do nó, não podemos acessar o conteúdo do nó depois do free
+       no_t *aux = no->prox;
+       free(no);
+       no = aux;
+     }
+     free(l);
+   }
+      
+   int lista_num_elem(lista_t *l)
+   {
+     return l->num;
+   }
+
+   bool lista_dado(lista_t *l, int pos, dado_t *pd)
+   {
+     if (pos < 0 || pos >= l->num) return false;
+     // tem que percorrer a lista, até encontrar o nó na posição pos
+     no_t *no = l->prim; // inicia no primeiro
+     int pos_no = 0;     // ele está na posição 0
+     while (pos_no < pos) {
+       no = no->prox;    // ainda não chegamos na posição desejada, vamos pro próximo
+       pos_no++;         // que está na próxima posição
+     }
+     // no aponta para o nó que tem o dado na posição pos -- copia o dado pra quem chamou
+     *pd = no->d;
+     return true;
+   }
+
+   bool lista_insere(lista_t *l, int pos, dado_t d)
+   {
+     if (pos < 0 || pos > l->num) return false;
+     // vamos inserir um novo dado, para isso precisamos um novo nó
+     no_t *novo = malloc(sizeof(no_t));
+     if (novo == NULL) return false;
+     // o novo nó vai conter o novo dado
+     novo->d = d;
+     // temos que encontrar o nó que precede o ponto de inserção, porque o nó seguinte a esse nó será o novo nó
+     if (pos == 0) {
+       // se a inserção é no início da lista, o novo nó é o primeiro da lista, e o seguinte é o antigo primeiro
+       // cuidado para fazer a atribuição na ordem certa e não perder o valor do l->prim antigo
+       novo->prox = l->prim;
+       l->prim = novo;
+     } else {
+       // a inserção não é no início, temos que encontrar o nó anterior (o que está na posição pos-1)
+       no_t *ant = l->prim;
+       int pos_ant = 0;
+       while (pos_ant < pos-1) {
+         ant = ant->prox;
+         pos_ant++;
+       }
+       // o nó que segue o novo é o que estava na posição pos (o próximo ao que está na posição pos-1)
+       // o novo nó passa a estar na posição pos, então ele é o novo sucessor do que está em pos-1
+       novo->prox = ant->prox;
+       ant->prox = novo;
+     }
+     // temos um dado a mais na lista
+     l->num++;
+     return true;
+   }
+
+   bool lista_remove(lista_t *l, int pos)
+   {
+     if (pos < 0 || pos >= l->num) return false;
+     no_t *vitima; // vai apontar para o nó a ser removido
+     if (pos == 0) {
+       // remoção do primeiro nó, o novo primeiro é o seguinte a ele
+       vitima = l->prim;
+       l->prim = vitima->prox;
+     } else {
+       // como na inserção, temos que encontrar o nó que está logo antes do nó que será removido
+       no_t *ant = l->prim;
+       int pos_ant = 0;
+       while (pos_ant < pos-1) {
+         ant = ant->prox;
+         pos_ant++;
+       }
+       // a vítima é quem está logo depois de quem está logo antes de quem será removido
+       vitima = ant->prox;
+       // quem passa a estar depois do anterior é quem estava depois da vítima
+       ant->prox = vitima->prox;
+     }
+     // o nó removido não está mais no encadeamento da lista
+     // libera a memória do nó removido, e diminui o número de dados na lista
+     free(vitima);
+     l->num--;
+     return true;
+   }
+```
