@@ -362,3 +362,9 @@ Uma implementação possível para a interface de lista vista antes, usando list
      return true;
    }
 ```
+
+#### Exercícios
+
+1. Implementa a lista com encadeamentos por posição em um vetor.
+2. Implementa suporte a posições negativas.
+3. O programa cliente funciona em todas as implementações de lista sem alterações?
