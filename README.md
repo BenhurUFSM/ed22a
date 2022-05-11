@@ -36,6 +36,7 @@ Os assuntos vistos em aula serão listados aqui.
 |    7 | 2mai  | revisão, fim (falamos sobre a implementação do t1 -- ver t1-v2.c)
 |    8 | 4mai  | [Implementação de TAD em C](Assuntos/tad.md)
 |    9 | 9mai  | [Listas](Assuntos/listas.md)
+|   10 | 11mai | [Listas encadeadas](Assuntos/listas.md)
 
 <!--
 |    1 |  19mai | introdução
