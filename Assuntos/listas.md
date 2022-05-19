@@ -368,3 +368,256 @@ Uma implementação possível para a interface de lista vista antes, usando list
 1. Implementa a lista com encadeamentos por posição em um vetor.
 2. Implementa suporte a posições negativas.
 3. O programa cliente funciona em todas as implementações de lista sem alterações?
+
+
+```c
+///programa visto em aula dia 1805
+#include "lista.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+bool iguais(dado_t d1, dado_t d2)
+{
+    return d1.codigo == d2.codigo;
+}
+
+
+int main()
+{
+    lista_t *l;
+    
+    l = lista_cria(10);
+    for (int i=0; i<10000; i++) {
+        dado_t d = {i, rand()%10000/100.0};
+        lista_insere(l, 0, d);
+    }
+    for (int i=0; i<10; i++) {
+        int n = rand()%20000;
+        dado_t d = {n, 0};
+        dado_t d2;
+        if (lista_dado_igual(l, d, &d2)) {
+            printf("%d pertence a lista, cod=%d, val=%.2f\n", n, d2.codigo, d2.valor);
+        } else {
+            printf("%d nao pertence a lista\n", n);
+        }
+    }
+    lista_destroi(l);
+    return 0;
+}
+
+
+#ifndef _LISTA_H_
+#define _LISTA_H_
+#include <stdbool.h>
+   
+typedef struct {
+    int codigo;
+    double valor;
+} dado_t;
+
+typedef struct lista lista_t;
+   
+lista_t *lista_cria(int cap);
+void lista_destroi(lista_t *l);
+   
+// retorna o número de dados atualmente na lista l
+int lista_num_elem(lista_t *l);
+// coloca em *pd o dado na posição pos da lista l, retorna false se não ok (e não coloca nada em *pd)
+bool lista_dado(lista_t *l, int pos, dado_t *pd);
+// insere d na posicao pos da lista l, retorna true se ok
+bool lista_insere(lista_t *l, int pos, dado_t d);
+// remove o dado na posição pos da lista l, retorna true se ok
+bool lista_remove(lista_t *l, int pos);
+
+bool iguais(dado_t d1, dado_t d2);
+// retorna verdadeiro se a lista contem um dado igual a d
+bool lista_pertence(lista_t *l, dado_t d);
+// retorna posicao de um dado igual a d na lista l, ou -1
+int lista_posicao(lista_t *l, dado_t d);
+// coloca em *d2 o dado igual a d e retorna true, ou retorna false
+bool lista_dado_igual(lista_t *l, dado_t d, dado_t *d2);
+#endif //_LISTA_H_
+
+
+#include "lista.h"
+#include <stdlib.h>
+
+// a estrutura para conter um nC3 -- contC)m um dado e um ponteiro para o prC3ximo nC3
+// essa estrutura C) interna C  implementaC'C#o da lista
+typedef struct no_t no_t;
+struct no_t
+{
+  dado_t d;
+  no_t *prox;
+};
+
+// a estrutura para o descritor da lista -- contC)m um ponteiro para o nC3 que contC)m o primeiro dado da lista
+struct lista
+{
+  int num;
+  no_t *prim;
+};
+
+lista_t *
+lista_cria (int cap)
+{
+  // cria uma lista vazia -- ignora a capacidade, a lista poderC! conter tantos nC3s quantos couberem na memC3ria
+  // poderia tambC)m guardar a capacidade e limitar o nC:mero mC!ximo de dados na lista
+  lista_t *l;
+  l = malloc (sizeof (lista_t));
+  if (l != NULL)
+    {
+      l->num = 0;
+      l->prim = NULL;
+    }
+  return l;
+}
+
+void
+lista_destroi (lista_t * l)
+{
+  // precisa liberar a memC3ria de cada nC3, e do descritor
+  no_t *no = l->prim;
+  while (no != NULL)
+    {
+      // salva o ponteiro que estC! dentro do nC3, nC#o podemos acessar o conteC:do do nC3 depois do free
+      no_t *aux = no->prox;
+      free (no);
+      no = aux;
+    }
+  free (l);
+}
+
+int
+lista_num_elem (lista_t * l)
+{
+  return l->num;
+}
+
+bool
+lista_dado (lista_t * l, int pos, dado_t * pd)
+{
+  if (pos < 0 || pos >= l->num)
+    return false;
+  // tem que percorrer a lista, atC) encontrar o nC3 na posiC'C#o pos
+  no_t *no = l->prim;		// inicia no primeiro
+  int pos_no = 0;		// ele estC! na posiC'C#o 0
+  while (pos_no < pos)
+    {
+      no = no->prox;		// ainda nC#o chegamos na posiC'C#o desejada, vamos pro prC3ximo
+      pos_no++;			// que estC! na prC3xima posiC'C#o
+    }
+  // no aponta para o nC3 que tem o dado na posiC'C#o pos -- copia o dado pra quem chamou
+  *pd = no->d;
+  return true;
+}
+
+bool
+lista_insere (lista_t * l, int pos, dado_t d)
+{
+  if (pos < 0 || pos > l->num)
+    return false;
+  // vamos inserir um novo dado, para isso precisamos um novo nC3
+  no_t *novo = malloc (sizeof (no_t));
+  if (novo == NULL)
+    return false;
+  // o novo nC3 vai conter o novo dado
+  novo->d = d;
+  // temos que encontrar o nC3 que precede o ponto de inserC'C#o, porque o nC3 seguinte a esse nC3 serC! o novo nC3
+  if (pos == 0)
+    {
+      // se a inserC'C#o C) no inC-cio da lista, o novo nC3 C) o primeiro da lista, e o seguinte C) o antigo primeiro
+      // cuidado para fazer a atribuiC'C#o na ordem certa e nC#o perder o valor do l->prim antigo
+      novo->prox = l->prim;
+      l->prim = novo;
+    }
+  else
+    {
+      // a inserC'C#o nC#o C) no inC-cio, temos que encontrar o nC3 anterior (o que estC! na posiC'C#o pos-1)
+      no_t *ant = l->prim;
+      int pos_ant = 0;
+      while (pos_ant < pos - 1)
+	{
+	  ant = ant->prox;
+	  pos_ant++;
+	}
+      // o nC3 que segue o novo C) o que estava na posiC'C#o pos (o prC3ximo ao que estC! na posiC'C#o pos-1)
+      // o novo nC3 passa a estar na posiC'C#o pos, entC#o ele C) o novo sucessor do que estC! em pos-1
+      novo->prox = ant->prox;
+      ant->prox = novo;
+    }
+  // temos um dado a mais na lista
+  l->num++;
+  return true;
+}
+
+bool
+lista_remove (lista_t * l, int pos)
+{
+  if (pos < 0 || pos >= l->num)
+    return false;
+  no_t *vitima;			// vai apontar para o nC3 a ser removido
+  if (pos == 0)
+    {
+      // remoC'C#o do primeiro nC3, o novo primeiro C) o seguinte a ele
+      vitima = l->prim;
+      l->prim = vitima->prox;
+    }
+  else
+    {
+      // como na inserC'C#o, temos que encontrar o nC3 que estC! logo antes do nC3 que serC! removido
+      no_t *ant = l->prim;
+      int pos_ant = 0;
+      while (pos_ant < pos - 1)
+	{
+	  ant = ant->prox;
+	  pos_ant++;
+	}
+      // a vC-tima C) quem estC! logo depois de quem estC! logo antes de quem serC! removido
+      vitima = ant->prox;
+      // quem passa a estar depois do anterior C) quem estava depois da vC-tima
+      ant->prox = vitima->prox;
+    }
+  // o nC3 removido nC#o estC! mais no encadeamento da lista
+  // libera a memC3ria do nC3 removido, e diminui o nC:mero de dados na lista
+  free (vitima);
+  l->num--;
+  return true;
+}
+
+// retorna verdadeiro se a lista contem um dado igual a d
+bool lista_pertence(lista_t *l, dado_t d)
+{
+    for (no_t *el = l->prim; el != NULL; el = el->prox) {
+        if (iguais(el->d, d)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// retorna posicao de um dado igual a d na lista l, ou -1
+int lista_posicao(lista_t *l, dado_t d){
+    int ct = 0;
+    
+    for (no_t *el = l->prim; el != NULL; el = el->prox) {
+        if (iguais(el->d, d)) return ct;
+        ct++;
+    }
+
+    return -1;
+}
+// coloca em *d2 um dado igual a d na lista l e retorna true, ou retorna false
+bool lista_dado_igual(lista_t *l, dado_t d, dado_t *d2)
+{
+    for (no_t *el = l->prim; el != NULL; el = el->prox) {
+        if (iguais(el->d, d)) {
+            if (d2 != NULL) *d2 = el->d;
+            return true;
+        }
+    }
+
+    return false;
+}
+```
