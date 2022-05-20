@@ -37,6 +37,7 @@ Os assuntos vistos em aula serão listados aqui.
 |    8 | 4mai  | [Implementação de TAD em C](Assuntos/tad.md)
 |    9 | 9mai  | [Listas](Assuntos/listas.md)
 |   10 | 11mai | [Listas encadeadas](Assuntos/listas.md)
+|   11 | 18mai | [Busca em listas encadeadas](Assuntos/listas.md)
 
 <!--
 |    1 |  19mai | introdução
