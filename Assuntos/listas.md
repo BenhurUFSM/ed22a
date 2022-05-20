@@ -27,7 +27,7 @@ Uma lista pode ser implementada de diversas formas. É comum classificar essas f
 Os dados são mantidos em uma região contígua de memória, em um vetor ou em uma região alocada dinamicamente (que pode ser tratada como um vetor).
 O primeiro elemento da lista é colocado na primeira posição desse vetor, o segundo na segunda posição etc.
 O número de elementos que se pode colocar na lista corresponde ao tamanho do vetor.
-Para se saber quantos elementos existem na lista (que geralmente é inferior ao tamanho do vetor), em geral se usa ou um elemento demarcador de fim (como em uma string em C) ou uma variável auxiliar que contém o número de elementos.
+Para se saber quantos elementos existem na lista (que geralmente é inferior ao tamanho do vetor), em geral se usa ou um elemento demarcador de fim (como em uma string em é ou uma variável auxiliar que contém o número de elementos.
 Na maioria dos casos se usa a segunda opção, por ser mais econômica (é necessário um inteiro e não o espaço de um item) e mais rápida (a operação de se obter o número de elementos na lista é mais simples).
 A implementação das operações básicas:
 - o número de elementos é obtido diretamente, já que tem uma variável com essa informação
@@ -454,11 +454,12 @@ bool iguais(dado_t d1, dado_t d2);
 ```
 A implementação da lista, lista.c:
 ```c
+/// Implementação de lista com encadeamento por ponteiros e elocação individual de nós
 #include "lista.h"
 #include <stdlib.h>
 
-// a estrutura para conter um nC3 -- contC)m um dado e um ponteiro para o prC3ximo nC3
-// essa estrutura C) interna C  implementaC'C#o da lista
+// a estrutura para conter um nó -- contém um dado e um ponteiro para o próximo nó
+// essa estrutura é interna à implementação da lista
 typedef struct no_t no_t;
 struct no_t
 {
@@ -466,7 +467,7 @@ struct no_t
   no_t *prox;
 };
 
-// a estrutura para o descritor da lista -- contC)m um ponteiro para o nC3 que contC)m o primeiro dado da lista
+// a estrutura para o descritor da lista -- contém um ponteiro para o nó que contém o primeiro dado da lista
 struct lista
 {
   int num;
@@ -476,8 +477,8 @@ struct lista
 lista_t *
 lista_cria (int cap)
 {
-  // cria uma lista vazia -- ignora a capacidade, a lista poderC! conter tantos nC3s quantos couberem na memC3ria
-  // poderia tambC)m guardar a capacidade e limitar o nC:mero mC!ximo de dados na lista
+  // cria uma lista vazia -- ignora a capacidade, a lista poderá conter tantos nós quantos couberem na memória
+  // poderia também guardar a capacidade e limitar o número máximo de dados na lista
   lista_t *l;
   l = malloc (sizeof (lista_t));
   if (l != NULL)
@@ -491,11 +492,11 @@ lista_cria (int cap)
 void
 lista_destroi (lista_t * l)
 {
-  // precisa liberar a memC3ria de cada nC3, e do descritor
+  // precisa liberar a memória de cada nó, e do descritor
   no_t *no = l->prim;
   while (no != NULL)
     {
-      // salva o ponteiro que estC! dentro do nC3, nC#o podemos acessar o conteC:do do nC3 depois do free
+      // salva o ponteiro que está dentro do nó, não podemos acessar o conteúdo do nó depois do free
       no_t *aux = no->prox;
       free (no);
       no = aux;
@@ -514,15 +515,15 @@ lista_dado (lista_t * l, int pos, dado_t * pd)
 {
   if (pos < 0 || pos >= l->num)
     return false;
-  // tem que percorrer a lista, atC) encontrar o nC3 na posiC'C#o pos
+  // tem que percorrer a lista, até encontrar o nó na posição pos
   no_t *no = l->prim;		// inicia no primeiro
-  int pos_no = 0;		// ele estC! na posiC'C#o 0
+  int pos_no = 0;		// ele está na posição 0
   while (pos_no < pos)
     {
-      no = no->prox;		// ainda nC#o chegamos na posiC'C#o desejada, vamos pro prC3ximo
-      pos_no++;			// que estC! na prC3xima posiC'C#o
+      no = no->prox;		// ainda não chegamos na posição desejada, vamos pro próximo
+      pos_no++;			// que está na próxima posição
     }
-  // no aponta para o nC3 que tem o dado na posiC'C#o pos -- copia o dado pra quem chamou
+  // no aponta para o nó que tem o dado na posição pos -- copia o dado pra quem chamou
   *pd = no->d;
   return true;
 }
@@ -532,23 +533,23 @@ lista_insere (lista_t * l, int pos, dado_t d)
 {
   if (pos < 0 || pos > l->num)
     return false;
-  // vamos inserir um novo dado, para isso precisamos um novo nC3
+  // vamos inserir um novo dado, para isso precisamos um novo nó
   no_t *novo = malloc (sizeof (no_t));
   if (novo == NULL)
     return false;
-  // o novo nC3 vai conter o novo dado
+  // o novo nó vai conter o novo dado
   novo->d = d;
-  // temos que encontrar o nC3 que precede o ponto de inserC'C#o, porque o nC3 seguinte a esse nC3 serC! o novo nC3
+  // temos que encontrar o nó que precede o ponto de inserção, porque o nó seguinte a esse nó será o novo nó
   if (pos == 0)
     {
-      // se a inserC'C#o C) no inC-cio da lista, o novo nC3 C) o primeiro da lista, e o seguinte C) o antigo primeiro
-      // cuidado para fazer a atribuiC'C#o na ordem certa e nC#o perder o valor do l->prim antigo
+      // se a inserção é no início da lista, o novo nó é o primeiro da lista, e o seguinte é o antigo primeiro
+      // cuidado para fazer a atribuição na ordem certa e não perder o valor do l->prim antigo
       novo->prox = l->prim;
       l->prim = novo;
     }
   else
     {
-      // a inserC'C#o nC#o C) no inC-cio, temos que encontrar o nC3 anterior (o que estC! na posiC'C#o pos-1)
+      // a inserção não é no início, temos que encontrar o nó anterior (o que está na posição pos-1)
       no_t *ant = l->prim;
       int pos_ant = 0;
       while (pos_ant < pos - 1)
@@ -556,8 +557,8 @@ lista_insere (lista_t * l, int pos, dado_t d)
 	  ant = ant->prox;
 	  pos_ant++;
 	}
-      // o nC3 que segue o novo C) o que estava na posiC'C#o pos (o prC3ximo ao que estC! na posiC'C#o pos-1)
-      // o novo nC3 passa a estar na posiC'C#o pos, entC#o ele C) o novo sucessor do que estC! em pos-1
+      // o nó que segue o novo é o que estava na posição pos (o próximo ao que está na posição pos-1)
+      // o novo nó passa a estar na posição pos, então ele é o novo sucessor do que está em pos-1
       novo->prox = ant->prox;
       ant->prox = novo;
     }
@@ -571,16 +572,16 @@ lista_remove (lista_t * l, int pos)
 {
   if (pos < 0 || pos >= l->num)
     return false;
-  no_t *vitima;			// vai apontar para o nC3 a ser removido
+  no_t *vitima;			// vai apontar para o nó a ser removido
   if (pos == 0)
     {
-      // remoC'C#o do primeiro nC3, o novo primeiro C) o seguinte a ele
+      // remoção do primeiro nó, o novo primeiro é o seguinte a ele
       vitima = l->prim;
       l->prim = vitima->prox;
     }
   else
     {
-      // como na inserC'C#o, temos que encontrar o nC3 que estC! logo antes do nC3 que serC! removido
+      // como na inserção, temos que encontrar o nó que está logo antes do nó que será removido
       no_t *ant = l->prim;
       int pos_ant = 0;
       while (pos_ant < pos - 1)
@@ -588,13 +589,13 @@ lista_remove (lista_t * l, int pos)
 	  ant = ant->prox;
 	  pos_ant++;
 	}
-      // a vC-tima C) quem estC! logo depois de quem estC! logo antes de quem serC! removido
+      // a vítima é quem está logo depois de quem está logo antes de quem será removido
       vitima = ant->prox;
-      // quem passa a estar depois do anterior C) quem estava depois da vC-tima
+      // quem passa a estar depois do anterior é quem estava depois da vítima
       ant->prox = vitima->prox;
     }
-  // o nC3 removido nC#o estC! mais no encadeamento da lista
-  // libera a memC3ria do nC3 removido, e diminui o nC:mero de dados na lista
+  // o nó removido não está mais no encadeamento da lista
+  // libera a memória do nó removido, e diminui o número de dados na lista
   free (vitima);
   l->num--;
   return true;
