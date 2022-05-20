@@ -369,9 +369,18 @@ Uma implementação possível para a interface de lista vista antes, usando list
 2. Implementa suporte a posições negativas.
 3. O programa cliente funciona em todas as implementações de lista sem alterações?
 
+* * *
 
+### Busca em lista encadeada
+
+Na interface de listas que vimos até agora, o acesso a um elemento da lista se dá por posição.
+Pode-se também ter acesso por conteúdo.
+Vimos em aula duas formas, uma para verificar a existência de um determinado valor na lista, e outra com a procura de um elemento à partir de parte do valor (um código, por exemplo).
+Para essas implementações, necessitamos poder comparar dois valores; para manter a implementação da lista independente do tipo de dados que ela armqzena, colocamos a comparação de elementos em uma função externa.
+A implementação vista em aula está abaixo:
+
+O programa principal:
 ```c
-///programa visto em aula dia 1805
 #include "lista.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -404,8 +413,9 @@ int main()
     lista_destroi(l);
     return 0;
 }
-
-
+```
+A interface, lista.h (com a definição do tipo de dados como uma estrutura com um código e um valor):
+```c
 #ifndef _LISTA_H_
 #define _LISTA_H_
 #include <stdbool.h>
@@ -429,16 +439,21 @@ bool lista_insere(lista_t *l, int pos, dado_t d);
 // remove o dado na posição pos da lista l, retorna true se ok
 bool lista_remove(lista_t *l, int pos);
 
-bool iguais(dado_t d1, dado_t d2);
 // retorna verdadeiro se a lista contem um dado igual a d
 bool lista_pertence(lista_t *l, dado_t d);
 // retorna posicao de um dado igual a d na lista l, ou -1
 int lista_posicao(lista_t *l, dado_t d);
 // coloca em *d2 o dado igual a d e retorna true, ou retorna false
 bool lista_dado_igual(lista_t *l, dado_t d, dado_t *d2);
+
+// função auxiliar, externa, para a comparação de dois dados 
+//   (uma forma de tornar a lista mais independente do dado seria fornecer acesso à essa função fornecendo 
+//   um ponteiro à ela na inicialização da lista)
+bool iguais(dado_t d1, dado_t d2);
 #endif //_LISTA_H_
-
-
+```
+A implementação da lista, lista.c:
+```c
 #include "lista.h"
 #include <stdlib.h>
 
