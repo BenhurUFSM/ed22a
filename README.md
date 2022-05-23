@@ -38,7 +38,7 @@ Os assuntos vistos em aula serão listados aqui.
 |    9 | 9mai  | [Listas](Assuntos/listas.md)
 |   10 | 11mai | [Listas encadeadas](Assuntos/listas.md)
 |   11 | 18mai | [Busca em listas encadeadas](Assuntos/listas.md)
-|   12 | 23mai | [Outras listas encadeadas](Assuntos/listas.md), [Filas, pilhas, deques](Assuntos/filas.md)
+|   12 | 23mai | [Outras listas encadeadas](Assuntos/listas.md), e ainda [Filas, pilhas, deques](Assuntos/filas.md)
 
 <!--
 |    1 |  19mai | introdução
