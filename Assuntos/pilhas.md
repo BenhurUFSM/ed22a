@@ -36,5 +36,20 @@ Uma função para inverter os elementos de uma pilha usando uma lista auxiliar:
 ```c
    void pilha_inverte(pilha_t *p)
    {
+     fila_t *f;
+     f = fila_cria();
+     while (!pilha_vazia(p)) {
+       fila_insere(f, pilha_remove(p));
+     }
+     while (!fila_vazia(f)) {
+       pilha_insere(p, fila_remove(f));
+     }
+     fila_destroi(f);
    }
 ```
+
+#### Exercícios
+
+1. Faça uma função que recebe uma fila e inverte a ordem dos elementos dela.
+2. Faça uma função que recebe uma pilha e retorna uma outra que é uma cópia da pilha recebida (mantendo a pilha original como estava).
+3. Faça uma função que recebe duas filas com elementos ordenados e retorna uma terceira, que contém todos os elementos das duas filas, também ordenados. Use a função auxiliar `bool menor(dado_t *a, dado_t *b);`, que retorna true se `a` deve estar antes de `b`. A fila tem a função `dado_t fila_consulta(fila_t *f)`, que retorna o mesmo dado que seria retornado por uma remoção, mas não o remove da fila.
