@@ -39,7 +39,7 @@ Os assuntos vistos em aula serão listados aqui.
 |   10 | 11mai | [Listas encadeadas](Assuntos/listas.md)
 |   11 | 18mai | [Busca em listas encadeadas](Assuntos/listas.md)
 |   12 | 23mai | [Outras listas encadeadas](Assuntos/listas.md), e ainda [Filas, pilhas, deques](Assuntos/filas.md)
-|   13 | 25mai | [Matrizes](Assuntos/matrizes.md), introdução a [Árvores](assuntos/arvores.md)
+|   13 | 25mai | [Matrizes](Assuntos/matrizes.md), introdução a [Árvores](Assuntos/arvores.md)
 
 <!--
 |    1 |  19mai | introdução
