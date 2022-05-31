@@ -40,6 +40,7 @@ Os assuntos vistos em aula serão listados aqui.
 |   11 | 18mai | [Busca em listas encadeadas](Assuntos/listas.md)
 |   12 | 23mai | [Outras listas encadeadas](Assuntos/listas.md), e ainda [Filas, pilhas, deques](Assuntos/filas.md)
 |   13 | 25mai | [Matrizes](Assuntos/matrizes.md), introdução a [Árvores](Assuntos/arvores.md)
+|   14 | 30mai | Conversa sobre a calculadora (veja inclusão no final da descrição do t3)
 
 <!--
 |    1 |  19mai | introdução
@@ -75,7 +76,7 @@ Os assuntos vistos em aula serão listados aqui.
 |   t1d |          | busca de uma palavra (para encontrar a palavra digitada pelo jogador)
 |   t1  | 1mai     | [wordle](Trabalhos/t1.md)
 |   t2  | 3mai     | Implemente o que falta em [wordle, v2](Trabalhos/t1-v2.c)
-|   t3  | 1jun     | [calculadora de expressões](Trabalhos/t3.md)
+|   t3  | ASD      | [calculadora de expressões](Trabalhos/t3.md)
 
 <!--
 |    t1 |  9jun10h | ver [aula 3](https://github.com/BenhurUFSM/ed21a/blob/main/Assuntos/03.md)
