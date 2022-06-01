@@ -23,6 +23,17 @@ Alguns conceitos de árvores:
 
 Quando a ordem dos filhos de um nó é importante, diz-se que a árvore é **ordenada**. Nesse caso, a árvore que tem a raiz A e os filhos B e C é considerada diferente da árvore que tem raiz A e filhos C e B. Se as árvores forem não ordenadas, essas duas árvores são consideradas iguais.
 
+Nesta disciplina, nos concentraremos em um tipo especial de árvores, as árvores de grau 2, ou *árvores binárias*.
+
+### Árvores binárias
+
+Em uma árvore binária, cada nó tem no máximo 2 filhos. Nos restringiremos ao estudo de árvores ordenadas, então a ordem entre esses dois filhos é uma informação importante. Como são só dois filhos, eles são comumente chamados de filho esquerdo e direito.
+
+Árvores binárias são estruturas definidas de forma recursiva, uma árvore binária pode ser:
+- vazia; ou
+- um nó, chamado de raiz e dois filhos, que são árvores binárias.
+e duas em que um deles é o nó raiz e os restantes são divididos em duas árvores filhas)
+
 <!--
 Percurso em uma árvore: forma de caminhamento entre os nós da árvore que visita todos os nós. Os principais tipos de percurso são:
 - percurso em largura: visita os nós, a partir da raiz, um nível por vez (primeiro visita a raiz, depois todos seus filhos, depois todos seus netos etc);
