@@ -34,6 +34,66 @@ Em uma árvore binária, cada nó tem no máximo 2 filhos. Nos restringiremos ao
 - um nó, chamado de raiz e dois filhos, que são árvores binárias.
 e duas em que um deles é o nó raiz e os restantes são divididos em duas árvores filhas)
 
+Uma forma comum de implementação de uma árvore é como um ponteiro para um nó, e esse nó contém o valor associado ao nó e dois ponteiros para os nós raiz das árvores filhas. Uma árvore vazia é implementada como um ponteiro nulo.
+
+```c
+   typedef struct arv arv_t;
+   struct arv {
+     dado_t valor;
+     arv_t *esq;
+     arv_t *dir;
+   };
+```
+
+Grande parte dos algoritmos que operam sobre árvores são mais facilmente implementados em forma recursiva.
+Por exemplo, para calcular quantos nós tem uma árvore, pode-se usar uma definição recursiva:
+   - uma árvore vazia tem 0 nós
+   - uma árvore não vazia tem um nó a mais que a soma dos nós de suas duas subárvores.
+Em código:
+```c
+   int num_nos(arv_t *a)
+   {
+      if (a == NULL) return 0;
+      return 1 + num_nos(a->esq) + num_nos(a->dir);
+   }
+```
+Para calcular a altura de uma árvore:
+   - uma árvore vazia tem altura -1
+   - uma árvore não vazia tem altura que é um além da maior altura entre as árvores filhas.
+Em código:
+```c
+   int altura(arv_t *a)
+   {
+      if (a == NULL) return -1;
+      return 1 + maior(altura(a->esq), altura(a->dir));
+   }
+```
+
+#### Exercícios
+
+1. Faça uma função que recebe uma árvore e retorna quantos nós folha ela tem
+2. Faça uma função que recebe uma árvore e retorna quantos nós não folha ela tem
+3. Faça uma função que recebe uma árvore e um valor e retorna um booleano que diz se a árvore contém ou não um nó com esse valor. Use a função auxiliar `bool valores_iguais(dado_t, dado_t)` para comparar dois valores.
+4. Faça uma função que recebe uma árvore e um valor e retorna o nível nessa árvore que está o nó que contém esse valor, ou -1 se o valor não estiver em nenhum nó da árvore. A raiz de uma árvore está no nível 0, os filhos da raiz no nível 1 etc.
+5. Faça uma função que recebe uma árvore e retorna o "fator de equilíbrio" do nó raiz dessa árvore. O "fator de equilíbrio" a ser considerado é a diferença entre a altura da subárvore esquerda e a da direita.
+
+Para testar essas funções, pode fazer uma árvore que armazena dados inteiros, e uma função que aloca um nó e retorna um ponteiro para ele, recebendo como argumentos o valor do nó e os ponteiros para os dois filhos. Uma árvore com a raiz com valor 1, o filho esquerdo com valor 2 e o direito com o valor 3 poderia ser criada assim:
+```c
+   arv_t *no(dado_t d, arv_t *esq, arv_t *dir)
+   {
+      arv_t *n = malloc(sizeof(arv_t));
+      assert(n != NULL);
+      n->d = d;
+      n->esq = esq;
+      n->dir = dir;
+      return n;
+   }
+   //...
+   arv_t *a = no(1, no(2, NULL, NULL), no(3, NULL, NULL));
+```
+
+
+
 <!--
 Percurso em uma árvore: forma de caminhamento entre os nós da árvore que visita todos os nós. Os principais tipos de percurso são:
 - percurso em largura: visita os nós, a partir da raiz, um nível por vez (primeiro visita a raiz, depois todos seus filhos, depois todos seus netos etc);
