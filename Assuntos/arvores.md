@@ -39,7 +39,7 @@ Uma forma comum de implementação de uma árvore é como um ponteiro para um n�
 ```c
    typedef struct arv arv_t;
    struct arv {
-     dado_t valor;
+     dado_t val;
      arv_t *esq;
      arv_t *dir;
    };
@@ -83,7 +83,7 @@ Para testar essas funções, pode fazer uma árvore que armazena dados inteiros,
    {
       arv_t *n = malloc(sizeof(arv_t));
       assert(n != NULL);
-      n->d = d;
+      n->val = d;
       n->esq = esq;
       n->dir = dir;
       return n;
