@@ -42,6 +42,7 @@ Os assuntos vistos em aula serão listados aqui.
 |   13 | 25mai | [Matrizes](Assuntos/matrizes.md), introdução a [Árvores](Assuntos/arvores.md)
 |   14 | 30mai | Conversa sobre a calculadora (veja inclusão no final da descrição do t3)
 |   15 | 1jun  | [Árvores binárias](Assuntos/arvores.md)
+|   16 | 6jun  | [Percursos em árvores](Assuntos/arvores.md)
 
 <!--
 |    1 |  19mai | introdução
