@@ -158,3 +158,22 @@ O percurso em largura é tipicamente implementado com o auxílio de uma fila:
             insere(f, sa)
    }
 ```
+
+Considere a árvore descrita abaixo (quem não tá na coluna da esquerda é folha):
+|  nó | esq | dir |
+| :---: | :---: | :---: |
+|  a  | b   | c   |
+|  b  | d   | e   |
+|  c  | /   | f   |
+|  d  | g   | /   |
+|  e  | i   | j   |
+|  f  | h   | k   |
+
+Em alguns dos percursos comuns, os nós seriam visitados na ordem abaixo:
+| percurso | ordem da visita |
+| :--- | :---:
+| pré-ordem à esquerda | a b d g e i j c f h k |
+| pré-ordem à direita  | a c f k h b e j i d g |
+| em-ordem à esquerda  | g d b i e j a c h f k |
+| em largura           | a b c d e f g i j h k |
+
