@@ -177,3 +177,40 @@ Em alguns dos percursos comuns, os nós seriam visitados na ordem abaixo:
 | em-ordem à esquerda  | g d b i e j a c h f k |
 | em largura           | a b c d e f g i j h k |
 
+
+### Árvores binárias de busca
+
+Uma árvore binária de busca (ABB) é uma árvore binária, ordenada, com nós com valores comparáveis entre si.
+Com "comparáveis entre si" quero dizer que eles têm uma ordem absoluta definida, ou seja, se A, B e C são valores que podem ser colocados na árvore, se A < B e B < C então A < C.
+Todos os nós da subárvore esquerda do nó que contém o valor V contêm valores menores que V; todos os nós da subárvore direita do nó que contém V contêm valores maiores que V. Todas as subárvores de uma ABB são ABB.
+
+A busca por um valor em uma ABB é rápida e simples: comparando-se o valor buscado com o valor de um nó, elimina-se da busca uma das subárvores desse nó (se o valor buscado é menor que o valor do nó, ele certamente não estará entre os valores da subárvore direita, que só contém valores superiores ao valor do nó. A busca só precisa percorrer um caminho na árvore para decidir se o valor procurado está ou não nessa árvore. No pior dos casos, percorre a altura da árvore. Se a árvore é equilibrada (as subárvores esquerda e direita de cada nó têm "pesos" semelhantes), a altura de uma árvore binária com *n* nós é próxima a *log<sub>2</sub>n*.
+
+Um percurso em-ordem em uma ABB visitará os nós em ordem crescente. Pode-se usar uma ABB para ordenar um conjunto de dados: insere-se todos os dados em uma ABB inicialmente vazia, e depois percorre-se a árvore em-ordem.
+
+#### Busca
+
+A **busca** por um dado em uma ABB pode ser implementada por uma função como a abaixo, que retorna o nó da árvore que contém o valor procurado, ou NULL:
+```c
+   no_t *busca(no_t *a, tipo_d valor)
+   {
+       if (vazia(a))                    return NULL;               // o valor certamente não está em uma árvore vazia!
+       else if (iguais(valor, a->dado)) return a;                  // achei!
+       else if (menor(valor, a->dado))  return busca(a->esq, val); // valor pequeno, continua a busca na subárvore esquerda
+       else                             return busca(a->dir, val); // valor grande, continua pela direita
+   }
+```
+Uma versão não recursiva:
+```c
+   no_t *busca(no_t *a, tipo_d valor)
+   {
+       while (!vazia(a)) {
+          if      (iguais(valor, a->dado)) return a;   // achei!
+          else if (menor(valor, a->dado))  a = a->esq; // valor pequeno, continua a busca na subárvore esquerda
+          else                             a = a->dir; // valor grande, continua pela direita
+       }
+       return NULL;               // o valor certamente não está em uma árvore vazia!
+   }
+```
+
+*...continua...*
