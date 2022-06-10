@@ -190,26 +190,34 @@ Um percurso em-ordem em uma ABB visitará os nós em ordem crescente. Pode-se us
 
 #### Busca
 
-A **busca** por um dado em uma ABB pode ser implementada por uma função como a abaixo, que retorna o nó da árvore que contém o valor procurado, ou NULL:
+A **busca** por um dado em uma ABB pode ser implementada por uma função como a abaixo, que retorna um ponteiro para o dado armazenado na árvore que compara como igual ao valor procurado, ou NULL:
 ```c
-   no_t *busca(no_t *a, tipo_d valor)
+   dado_t *busca(no_t *a, dado_t valor)
    {
-       if (vazia(a))                    return NULL;               // o valor certamente não está em uma árvore vazia!
-       else if (iguais(valor, a->dado)) return a;                  // achei!
-       else if (menor(valor, a->dado))  return busca(a->esq, val); // valor pequeno, continua a busca na subárvore esquerda
-       else                             return busca(a->dir, val); // valor grande, continua pela direita
+     if (vazia(a)) {
+       return NULL;               // o valor certamente não está em uma árvore vazia!
+     } else if (iguais(valor, a->dado)) {
+       return &(a->dado);         // achei!
+     } else if (menor(valor, a->dado)) {
+       return busca(a->esq, val); // valor pequeno, continua a busca na subárvore esquerda
+     } else {
+       return busca(a->dir, val); // valor grande, continua pela direita
+     }
    }
 ```
 Uma versão não recursiva:
 ```c
-   no_t *busca(no_t *a, tipo_d valor)
+   dado_t *busca(no_t *a, dado_t valor)
    {
-       while (!vazia(a)) {
-          if      (iguais(valor, a->dado)) return a;   // achei!
-          else if (menor(valor, a->dado))  a = a->esq; // valor pequeno, continua a busca na subárvore esquerda
-          else                             a = a->dir; // valor grande, continua pela direita
-       }
-       return NULL;               // o valor certamente não está em uma árvore vazia!
+     while (!vazia(a)) {
+       if (iguais(valor, a->dado)) {
+         return &a->dado;   // achei!
+       } else if (menor(valor, a->dado)) {
+         a = a->esq;        // valor pequeno, continua a busca na subárvore esquerda
+       } else {
+         a = a->dir;        // valor grande, continua pela direita
+     }
+     return NULL;           // o valor certamente não está em uma árvore vazia!
    }
 ```
 
