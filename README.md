@@ -44,6 +44,7 @@ Os assuntos vistos em aula serão listados aqui.
 |   15 | 1jun  | [Árvores binárias](Assuntos/arvores.md)
 |   16 | 6jun  | [Percursos em árvores](Assuntos/arvores.md)
 |   17 | 8jun  | [Árvores binárias de busca](Assuntos/arvores.md)
+|   18 | 13jun | [Árvores AVL](Assuntos/arvores_AVL.md)
 
 <!--
 |    1 |  19mai | introdução
