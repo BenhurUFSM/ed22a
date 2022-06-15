@@ -72,7 +72,7 @@ dado_t heap_remove(heap_t *h)
     int pos_d = filho_direito(pos);
     int pos_m = heap_pos_maior_prio(h, pos_r, pos_e, pos_d);
     h->vet[pos] = h->vet[pos_m];   // o dado de maior prio vai para a posicao vazia
-    if (pos_m == pos_r) break;     // foi a dado que tava sendo relocado
+    if (pos_m == pos_r) break;     // o dado que foi pro lugar livre é o que precisava ser relocado
     pos = pos_m;                   // o local onde estava o mais prioritário agora tá vazio -- segue
   }
   h->n--;                          // tem um dado a menos
