@@ -82,6 +82,7 @@ Os assuntos vistos em aula serão listados aqui.
 |   t1  | 1mai     | [wordle](Trabalhos/t1.md)
 |   t2  | 3mai     | Implemente o que falta em [wordle, v2](Trabalhos/t1-v2.c)
 |   t3  | ASD      | [calculadora de expressões](Trabalhos/t3.md)
+|   t4  | ASD      | [edb](Trabalhos/t4.md)
 
 <!--
 |    t1 |  9jun10h | ver [aula 3](https://github.com/BenhurUFSM/ed21a/blob/main/Assuntos/03.md)
