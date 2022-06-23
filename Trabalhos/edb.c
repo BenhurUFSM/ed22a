@@ -28,7 +28,7 @@ void edb_destroi(edb_t *edb)
 
 static int acha(edb_t *edb, chave_t chave)
 {
-  for (int i=0; i<10; i++) {
+  for (int i=0; i < edb->n_valores; i++) {
     if (compara_chave_valor(chave, edb->valores[i]) == 0) {
       return i;
     }
