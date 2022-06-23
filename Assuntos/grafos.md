@@ -8,13 +8,24 @@ Qual o caminho mais barato para fazer um percurso entre tais cidades em um passe
 Por quantos switches passa um pacote para ir do computador A para o B?
 Por onde passar fibra entre os prédios do câmpus de forma a interligá-los todos pelo menor custo?
 Tal arquivo foi alterado, quais programas devem ser recompilados em função dessa alteração?
-Para instalar este novo programa, quais outros programas e/ou bibliotecas devem ser instalados ou atualizados?
+Para instalar este nov
+o programa, quais outros programas e/ou bibliotecas devem ser instalados ou atualizados?
 
 Formalmente, um grafo `G` é definido como dois conjuntos, um conjunto `V` de **vértices** ou nós e um conjunto `E` de **arestas** ou arcos, que representam conexões entre esses vértices (`G = (V, E)`). O conjunto V não pode ser vazio, o E pode.
 ("E" vem de *edge*, muitos autores traduzem como "A")
 
 Se as arestas são bi-direcionais (se x conecta a y então y conecta a x), o grafo é dito **não orientado**. Cada aresta é representada por um conjunto contendo 2 nós, escrita com a identificação dos dois nós entre chaves -- uma aresta entre `a` e `b` é escrita assim: `{a,b}`.
 Se, ao contrário, as arestas têm direção definida, o grafo é chamado de **orientado**, ou **digrafo** (do inglês digraph -- directed graph). Cada aresta é representada por um par ordenado de vértices, escrito com a identificação dos dois nós entre parênteses -- uma aresta de `a` para `b` é escrita assim: `(a,b)`, e uma de `b` para `a`, `(b,a)`. Nem todo mundo segue essa convenção de escrita, representando arestas como `v-w`, alguns representam pares ordenados como `<a,b>`, alguns não diferenciam na escrita entre ordenados e não ordenados, esclarecendo na descrição do grafo, etc.
+
+O grafo g1 da figura abaixo pode ser representado assim:
+```
+g1(V,E)
+V={A, B, C, D}
+E={(A,B)}
+```
+
+[grafos g1 e g2](../Figuras/g1g2.png)
+
 
 Um grafo pode ser **ponderado** ou **valorado**, quando se tem um valor numérico associado a cada vértice ou, mais comumente, a cada aresta. Esse valor pode representar, por exemplo, o custo para se percorrer o caminho representado por essa aresta.
 
