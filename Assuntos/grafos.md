@@ -24,7 +24,7 @@ V={A, B, C, D}
 E={(A,B)}
 ```
 
-![grafos g1 e g2](../Figuras/g1g2.png)
+![grafos g1 e g2](../Figuras/g1g2.svg)
 
 
 Um grafo pode ser **ponderado** ou **valorado**, quando se tem um valor numérico associado a cada vértice ou, mais comumente, a cada aresta. Esse valor pode representar, por exemplo, o custo para se percorrer o caminho representado por essa aresta.
