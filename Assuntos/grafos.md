@@ -21,7 +21,13 @@ O grafo g1 da figura abaixo pode ser representado assim:
 ```
 g1(V,E)
 V={A, B, C, D}
-E={(A,B)}
+E={{A,B},{A,C},{B,C},{D,B}}
+```
+O grafo g2 pode ser representado assim:
+```
+g2(V,E)
+V={A, B, C, D}
+E={(A,B),(A,C),(A,D),(B,D)}
 ```
 
 ![grafos g1 e g2](../Figuras/g1g2.svg)
