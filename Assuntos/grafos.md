@@ -209,17 +209,25 @@ void percurso_largura(int n_nos, lista grafo[n_nos])
 }
 ```
 
-Qualquer desses percursos poderia ser usado para detectar ciclos em um grafo, de forma bem simples: se durante o percurso chega-se a um nó já marcado, é porque o grafo contém um ciclo.
+#### Detecção de ciclos
+
+A deteção de ciclos em um grafo não direcionado é mais simples que a detecção em um grafo direcionado.
+Em um grafo não direcionado, pode-se fazer um percurso no grafo, e se esse percurso levar a um nó que já foi visitado,
+é sinal que o grafo tem um ciclo, porque se existem mais de um caminho para se chegar a um nó do grafo quer dizer que existe um ciclo envolvendo esses dois caminhos.
+No caso de um grafo direcionado, o fato de se ter mais de um caminho para atingir um nó não implica na existência de um ciclo, porque pode não haver um caminho de volta, necessário para a existência do ciclo.
+
+Para detectar se um grafo não direcionado é acíclico, o algoritmo e simples: percorre-se o grafo, e se durante o percurso chega-se a um nó já marcado, é porque o grafo contém um ciclo e não é acíclico.
 
 O percurso em profundidade visto anteriormente poderia ser alterado para detectar ciclos assim:
 ```c
-bool ciclico(int n_nos, int grafo[n_nos][n_nos])
+bool aciclico(int n_nos, int grafo[n_nos][n_nos])
 {
+  bool marcado[n_nos] = { false };  // todos desmarcados
   for (int no = 0; no < n_nos; no++) {
-    bool marcado[n_nos] = { false };  // todos desmarcados
-    if (acha_ciclo(n_nos, grafo, marcado, no)) return true;
+    if (marcado[no]) continue;
+    if (acha_ciclo(n_nos, grafo, marcado, no)) return false;
   }
-  return false;
+  return true;
 }
 
 bool acha_ciclo(int n_nos, int grafo[n_nos][n_nos], 
@@ -236,6 +244,36 @@ bool acha_ciclo(int n_nos, int grafo[n_nos][n_nos],
 }
 ```
 
+Para o caso de grafos direcionados, a detecção é um pouco mais complexa. O ciclo é detectado se durante o percurso se chega a um nó que faz parte do percurso atual, e não a qualquer nó que já tenha sido visitado. Preciasmos distinguir entre 3 estados de cada nó: ainda não visitado, em visita (ainda não se terminou de visitar os seus adjacentes) e já visitados (após o percurso de todos seus adjacentes). Só se detecta um ciclo quando se chega em um nó que está "em visita", porque quer dizer que se chegou de novo a esse nó durante a visita a seus adjacentes. Quando se chega a um nó já visitado, quer dizer simplesmente que tem mais de um caminho para se chegar ao mesmo nó, não que haja um ciclo.
+O código pode ser então:
+```c
+bool aciclico(int n_nos, int grafo[n_nos][n_nos])
+{
+  enum { NV=0, EV, JV} marca[n_nos] = { NV };  // todos marcados como não visitados (pq tem valor 0)
+  for (int no = 0; no < n_nos; no++) {
+    if (marca[no] != NV) continue;
+    if (acha_ciclo(n_nos, grafo, marcado, no)) return false;
+  }
+  return true;
+}
+
+bool acha_ciclo(int n_nos, int grafo[n_nos][n_nos], 
+                bool marcado[n_nos], int no)
+{
+  if (marca[no] == EV) return true;
+  if (marca[no] == JV) return false;
+  marca[no] = EV;
+  for (int adj = 0; adj < n_nos; adj++) {
+    if (grafo[no][adj] != 0) {
+      if (acha_ciclo(n_nos, grafo, marcado, adj)) return true;
+    }
+  }
+  marca[no] = JV;
+  return false;
+}
+```
+As marcas são mais comumente chamadas de coloração (branco, cinza e preto).
+Esse mesmo código pode ser usado em grafos não direcionados.
 
 <!--
 #### Grafos direcionados acíclicos (DAGs)
