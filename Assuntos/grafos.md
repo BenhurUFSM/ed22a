@@ -65,9 +65,9 @@ Para isso, ou se coloca uma variável a mais em cada nó, para marcá-lo, ou se 
 
 ```
 percurso_profundidade(grafo g):
-   para cada nó n em g.V
+   para cada nó n em g.V       // nenhum nó foi visitado ainda
       desmarca(n)
-   para cada nó n em g.V
+   para cada nó n em g.V       // inicia o percurso em cada nó que ainda não foi visitado
       if nao_marcado(n)
          percorre_prof(g, n)
 
@@ -84,9 +84,9 @@ percorre_prof(grafo g, vertice n):
 ```
 percurso_largura(g):
    fila f
-   para cada nó n em g.V
+   para cada nó n em g.V       // nenhum nó foi visitado ainda
       desmarca(n)
-   para cada nó n em g.V
+   para cada nó n em g.V       // inicia o percurso em cada nó que ainda não foi visitado
       if nao_marcado(n)
          insere(f, n)
       while !vazia(f)
@@ -94,12 +94,11 @@ percurso_largura(g):
          if nao_marcado(m)
             marca(m)
             visita(m)
-            para cada nó a adjacente a m em g
+            para cada nó a adjacente a m em g   // coloca os vizinhos na fila para visita futura
                if nao_marcado(a)
                   insere(f, a)
 ```
 
-<!--
 ### Implementação de grafos
 
 Tem duas ideias principais de se implementar grafos, com listas de adjacências e com matriz de adjacências.
@@ -108,7 +107,7 @@ Na primeira, se mantém um conjunto de listas, chamadas **listas de adjacências
 Cada lista contém uma entrada para cada aresta que parte desse nó.
 Cada entrada contém o nó destino dessa aresta.
 
-Por exemplo, o grafo `g1` composto pelos conjuntos `V` e `E` abaixo:
+Por exemplo, o grafo orientado `g3` composto pelos conjuntos `V` e `E` abaixo:
 ```
    V = {a, b, c, d, e}
    E = {(a,b), (a,c), (c,b), (d,b), (d,d), (d,e), (e,b)}
@@ -122,7 +121,7 @@ seria implementado pelas 5 listas abaixo, uma para cada nó:
    e -> [ b ]
 ```
 
-O grafo `g2` composto pelos conjuntos `V` e `E` abaixo:
+O grafo `g4` composto pelos conjuntos `V` e `E` abaixo:
 ```
    V = {a, b, c, d, e}
    E = {{a,b}, {a,c}, {c,b}, {d,b}, {d,d}, {d,e}, {e,b}}
@@ -138,8 +137,9 @@ seria implementado pelas 5 listas abaixo, uma para cada nó:
 
 Na implementação com **matriz de adjacências**, usa-se uma matriz quadrada, com uma linha e uma coluna para cada nó do grafo.
 Cada elemento da matriz contém um valor, que pode ser zero ou um, que diz se existe uma aresta que vai do nó correspondenta à linha desse elemento até o nó correspondente à coluna desse elemento.
+Se o grafo for não orientado, a matriz será simétrica.
 
-Os grafos `g1` e `g2` acima seriam implementados pelas matrizes abaixo:
+Os grafos `g3` e `g4` acima seriam implementados pelas matrizes abaixo:
 ```
 g1 a b c d e
 a  0 1 1 0 0
@@ -215,11 +215,9 @@ O percurso em profundidade visto anteriormente poderia ser alterado para detecta
 ```c
 bool ciclico(int n_nos, int grafo[n_nos][n_nos])
 {
-  bool marcado[n_nos] = { false };  // todos desmarcados
   for (int no = 0; no < n_nos; no++) {
-    if (!marcado[no]) {
-      if (acha_ciclo(n_nos, grafo, marcado, no)) return true;
-    }
+    bool marcado[n_nos] = { false };  // todos desmarcados
+    if (acha_ciclo(n_nos, grafo, marcado, no)) return true;
   }
   return false;
 }
@@ -237,6 +235,10 @@ bool acha_ciclo(int n_nos, int grafo[n_nos][n_nos],
   return false;
 }
 ```
+
+
+<!--
+#### Grafos direcionados acíclicos (DAGs)
 
 Uma subclasse bastante importante de grafos são os DAGs, grafos direcionados acíclicos. Por exemplo, toda árvore é um DAG. Um DAG pode ser usado para modelar dependências, como em uma sequência de tarefas, em que umas dependem das outras -- pré-requisitos em disciplinas, restrições na ordem de colocação de roupas, dependências entre arquivos em uma IDE, por exemplo.
 
