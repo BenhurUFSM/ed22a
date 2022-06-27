@@ -47,7 +47,7 @@ Um **laço** é uma aresta que une um nó a ele mesmo.
 
 Um **caminho** é uma sequência de vértices *(v<sub>0</sub>, v<sub>1</sub>, v<sub>2</sub>, .., v<sub>n</sub>)*, em que *v<sub>0</sub>* a *v<sub>n</sub>* pertencem a *V*, e todos os pares consecutivos no caminho *(v<sub>i</sub>,v<sub>i+1</sub>)* pertencem a *E* (ou *{v<sub>i</sub>,v<sub>i+1</sub>}* no caso de grafo não orientado). Esse caminho une o vértice *v<sub>0</sub>* ao vértice *v<sub>n</sub>* e tem comprimento *n*.
 Se não existem vértices repetidos em um caminho, ele é dito **simples**.
-Se o primeiro e o último vértice de um caminho são o mesmo, esse caminho é chamado de ciclo.
+Se o primeiro e o último vértice de um caminho são o mesmo, esse caminho é chamado de **ciclo**.
 
 Se existe um caminho ligando *a* a *b*, diz-se que *b* é **alcançável** a partir de *a*. 
 Se existe um caminho interligando todos os vértices de um grafo, esse grafo é chamado de **conexo**.
