@@ -163,7 +163,8 @@ O percurso em profundidade visto anteriormente poderia ser implementado em um gr
 ```c
 void percurso_profundidade(int n_nos, int grafo[n_nos][n_nos])
 {
-  bool marcado[n_nos] = { false };  // todos desmarcados
+  bool marcado[n_nos];
+  for (int no = 0; no < n_nos; no++) marcado[no] = false;  // todos desmarcados
   for (int no = 0; no < n_nos; no++) {
     if (!marcado[no]) {
       percorre_profundidade(n_nos, grafo, marcado, no);
@@ -189,7 +190,8 @@ Uma possível implementação do percurso em largura em um grafo implementado co
 ```c
 void percurso_largura(int n_nos, lista grafo[n_nos])
 {
-  bool marcado[n_nos] = { false };  // todos desmarcados
+  bool marcado[n_nos];
+  for (int no = 0; no < n_nos; no++) marcado[no] = false;  // todos desmarcados
   fila f;
   f = fila_cria();
   for (int no = 0; no < n_nos; no++) {
@@ -222,7 +224,8 @@ O percurso em profundidade visto anteriormente poderia ser alterado para detecta
 ```c
 bool aciclico(int n_nos, int grafo[n_nos][n_nos])
 {
-  bool marcado[n_nos] = { false };  // todos desmarcados
+  bool marcado[n_nos];
+  for (int no = 0; no < n_nos; no++) marcado[no] = false;  // todos desmarcados
   for (int no = 0; no < n_nos; no++) {
     if (marcado[no]) continue;
     if (acha_ciclo(n_nos, grafo, marcado, no)) return false;
@@ -249,7 +252,8 @@ O código pode ser então:
 ```c
 bool aciclico(int n_nos, int grafo[n_nos][n_nos])
 {
-  enum { NV=0, EV, JV} marca[n_nos] = { NV };  // todos marcados como não visitados (pq tem valor 0)
+  enum { NV=0, EV, JV} marca[n_nos];
+  for (int no = 0; no < n_nos; no++) marca[no] = NV;  // todos marcados como não visitados
   for (int no = 0; no < n_nos; no++) {
     if (marca[no] != NV) continue;
     if (acha_ciclo(n_nos, grafo, marcado, no)) return false;
@@ -359,7 +363,8 @@ O código de percurso em profundidade anterior poderia ser alterado da seguinte 
 ```c
 pilha ordem_topologica(int n_nos, int grafo[n_nos][n_nos])
 {
-  bool marcado[n_nos] = { false };  // todos desmarcados
+  bool marcado[n_nos];
+  for (int no = 0; no < n_nos; no++) marcado[no] = false;  // todos desmarcados
   pilha ordem = pilha_cria();
   for (int no = 0; no < n_nos; no++) {
     if (!marcado[no]) {
