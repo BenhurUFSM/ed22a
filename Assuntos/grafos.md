@@ -256,8 +256,9 @@ bool aciclico(int n_nos, int grafo[n_nos][n_nos])
   marca_t marca[n_nos];
   for (int no = 0; no < n_nos; no++) marca[no] = nao_visitado;  // todos marcados como não visitados
   for (int no = 0; no < n_nos; no++) {
-    if (marca[no] != nao_visitado) continue;
-    if (acha_ciclo(n_nos, grafo, marca, no)) return false;
+    if (marca[no] == nao_visitado) {
+      if (acha_ciclo(n_nos, grafo, marca, no)) return false;
+    }
   }
   return true;
 }
