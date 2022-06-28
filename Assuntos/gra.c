@@ -9,7 +9,7 @@ void visita(int no)
   printf("visita ao nó %d\n", no);
 }
 
-/// putz, precisa uma fila de inteiros pra percurso em largura!
+/// uma fila de inteiros (para percursos em largura)
 typedef struct fila {
   int v[100];
   int n;
@@ -113,6 +113,8 @@ void percurso_larg_mat(int n_nos, bool grafo[n_nos][n_nos])
   }
 }
 
+
+// para implementar grafos com listas de adjacências, precisa uma estrutura para os itens da lista
 typedef struct item_t item_t;
 struct item_t {
   int no;
