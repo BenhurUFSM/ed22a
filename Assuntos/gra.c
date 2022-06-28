@@ -60,28 +60,125 @@ int fila_remove(fila f)
 // percurso em profundidade em um grafo implementado como matriz de adjacências
 void percorre_prof_mat(int n_nos, bool grafo[n_nos][n_nos], bool visitado[n_nos], int no)
 {
-	if (visitado[no]) return;
-	visitado[no] = true;
-	visita(no);
-	for (int adj=0; adj<n_nos; adj++) {
-		if (grafo[no][adj]) {
-			percorre_prof_mat(n_nos, grafo, visitado, adj);
-		}
-	}
+  if (visitado[no]) return;
+  visitado[no] = true;
+  visita(no);
+  for (int adj=0; adj<n_nos; adj++) {
+    if (grafo[no][adj]) {
+      percorre_prof_mat(n_nos, grafo, visitado, adj);
+    }
+  }
 }
 
 void percurso_prof_mat(int n_nos, bool grafo[n_nos][n_nos])
 {
-	bool visitado[n_nos];
-	for (int no = 0; no < n_nos; no++) visitado[no] = false;
-	for (int no = 0; no < n_nos; no++) {
-		if (!visitado[no]) {
-			percorre_prof_mat(n_nos, grafo, visitado, no);
-		}
-	}
+  bool visitado[n_nos];
+  for (int no = 0; no < n_nos; no++) visitado[no] = false;
+  for (int no = 0; no < n_nos; no++) {
+    if (!visitado[no]) {
+      percorre_prof_mat(n_nos, grafo, visitado, no);
+    }
+  }
+}
+
+// percurso em largura em um grafo implementado como matriz de adjacências
+void percorre_larg_mat(int n_nos, bool grafo[n_nos][n_nos], bool visitado[n_nos], int no)
+{
+  if (visitado[no]) return;
+  fila f = fila_cria();
+  fila_insere(f, no);
+  while (!fila_vazia(f)) {
+    no = fila_remove(f);
+    if (visitado[no]) continue;
+    visitado[no] = true;
+    visita(no);
+    for (int adj=0; adj<n_nos; adj++) {
+      if (grafo[no][adj]) {
+        if (!visitado[adj])
+          fila_insere(f, adj);
+      }
+    }
+  }
+  fila_destroi(f);
+}
+
+void percurso_larg_mat(int n_nos, bool grafo[n_nos][n_nos])
+{
+  bool visitado[n_nos];
+  for (int no = 0; no < n_nos; no++) visitado[no] = false;
+  for (int no = 0; no < n_nos; no++) {
+    if (!visitado[no]) {
+      percorre_larg_mat(n_nos, grafo, visitado, no);
+    }
+  }
+}
+
+typedef struct item_t item_t;
+struct item_t {
+  int no;
+  item_t *prox;
+};
+
+// percurso em profundidade em grafo implementado com lista de adjacências
+void percorre_prof_lista(int n_nos, item_t *grafo[n_nos], bool visitado[n_nos], int no)
+{
+  if (visitado[no]) return;
+  visitado[no] = true;
+  visita(no);
+  for (item_t *item=grafo[no]; item != NULL; item =  item->prox) {
+    int adj = item->no;
+    percorre_prof_lista(n_nos, grafo, visitado, adj);
+  }
+}
+
+void percurso_prof_lista(int n_nos, item_t *grafo[n_nos])
+{
+  bool visitado[n_nos];
+  for (int no = 0; no < n_nos; no++) visitado[no] = false;
+  for (int no = 0; no < n_nos; no++) {
+    if (!visitado[no]) {
+      percorre_prof_lista(n_nos, grafo, visitado, no);
+    }
+  }
 }
 
 
+// percurso em largura em um grafo implementado como lista de adjacências
+void percorre_larg_lista(int n_nos, item_t *grafo[n_nos], bool visitado[n_nos], int no)
+{
+  if (visitado[no]) return;
+  fila f;
+  f = fila_cria();
+  fila_insere(f, no);
+  while (!fila_vazia(f)) {
+    no = fila_remove(f);
+    if (!visitado[no]) {
+      visitado[no] = true;
+      visita(no);
+      for (item_t *item=grafo[no]; item != NULL; item =  item->prox) {
+        int adj = item->no;
+        if (!visitado[adj]) {
+          fila_insere(f, adj);
+        }
+      }
+    }
+  }
+}
+
+void percurso_larg_lista(int n_nos, item_t *grafo[n_nos])
+{
+  bool visitado[n_nos];
+  for (int no = 0; no < n_nos; no++) visitado[no] = false;
+  for (int no = 0; no < n_nos; no++) {
+    if (!visitado[no]) {
+      percorre_larg_lista(n_nos, grafo, visitado, no);
+    }
+  }
+}
+
+
+
+// busca de ciclos em um grafo implementado como matriz de adjacências
 
 typedef enum { nao_visitado, em_visita, ja_visitado} marca_t;
 
@@ -92,7 +189,7 @@ bool acha_ciclo(int n_nos, bool grafo[n_nos][n_nos],
   if (marca[no] == ja_visitado) return false;
   marca[no] = em_visita;
   for (int adj = 0; adj < n_nos; adj++) {
-    if (grafo[no][adj] != 0) {
+    if (grafo[no][adj]) {
       if (acha_ciclo(n_nos, grafo, marca, adj)) return true;
     }
   }
@@ -105,109 +202,15 @@ bool aciclico(int n_nos, bool grafo[n_nos][n_nos])
   marca_t marca[n_nos];
   for (int no = 0; no < n_nos; no++) marca[no] = nao_visitado;  // todos marcados como não visitados
   for (int no = 0; no < n_nos; no++) {
-    if (marca[no] != nao_visitado) continue;
-    if (acha_ciclo(n_nos, grafo, marca, no)) return false;
+    if (marca[no] == nao_visitado) {
+      if (acha_ciclo(n_nos, grafo, marca, no)) return false;
+    }
   }
   return true;
 }
 
 
-// percurso em largura em um grafo implementado como matriz de adjacências
-/// comentado porque não tenho fila
-void percorre_larg_mat(int n_nos, bool grafo[n_nos][n_nos], bool visitado[n_nos], int no)
-{
-	if (visitado[no]) return;
-	fila f = fila_cria();
-	fila_insere(f, no);
-	while (!fila_vazia(f)) {
-		no = fila_remove(f);
-		if (visitado[no]) continue;
-		visitado[no] = true;
-		visita(no);
-		for (int adj=0; adj<n_nos; adj++) {
-			if (grafo[no][adj]) {
-				if (!visitado[adj])
-					fila_insere(f, adj);
-			}
-		}
-	}
-  fila_destroi(f);
-}
-
-void percurso_larg_mat(int n_nos, bool grafo[n_nos][n_nos])
-{
-	bool visitado[n_nos];
-	for (int no = 0; no < n_nos; no++) visitado[no] = false;
-	for (int no = 0; no < n_nos; no++) {
-		if (!visitado[no]) {
-			percorre_larg_mat(n_nos, grafo, visitado, no);
-		}
-	}
-}
-
-typedef struct item_t item_t;
-struct item_t {
-	int no;
-	item_t *prox;
-};
-
-// percurso em profundidade em grafo implementado com lista de adjacências
-void percorre_prof_lista(int n_nos, item_t *grafo[n_nos], bool visitado[n_nos], int no)
-{
-	if (visitado[no]) return;
-	visitado[no] = true;
-	visita(no);
-	for (item_t *item=grafo[no]; item != NULL; item =  item->prox) {
-		int adj = item->no;
-		percorre_prof_lista(n_nos, grafo, visitado, adj);
-	}
-}
-
-void percurso_prof_lista(int n_nos, item_t *grafo[n_nos])
-{
-	bool visitado[n_nos];
-	for (int no = 0; no < n_nos; no++) visitado[no] = false;
-	for (int no = 0; no < n_nos; no++) {
-		if (!visitado[no]) {
-			percorre_prof_lista(n_nos, grafo, visitado, no);
-		}
-	}
-}
-
-
-// percurso em largura em um grafo implementado como lista de adjacências
-void percorre_larg_lista(int n_nos, item_t *grafo[n_nos], bool visitado[n_nos], int no)
-{
-	if (visitado[no]) return;
-	fila f;
-	f = fila_cria();
-	fila_insere(f, no);
-	while (!fila_vazia(f)) {
-		no = fila_remove(f);
-		if (!visitado[no]) {
-			visitado[no] = true;
-			visita(no);
-			for (item_t *item=grafo[no];
-					item != NULL;
-					item =  item->prox) {
-				int adj = item->no;
-				if (!visitado[adj])
-			        	fila_insere(f, adj);
-			}
-		}
-	}
-}
-
-void percurso_larg_lista(int n_nos, item_t *grafo[n_nos])
-{
-	bool visitado[n_nos];
-	for (int no = 0; no < n_nos; no++) visitado[no] = false;
-	for (int no = 0; no < n_nos; no++) {
-		if (!visitado[no]) {
-			percorre_larg_lista(n_nos, grafo, visitado, no);
-		}
-	}
-}
+// funções de teste
 
 void testa_grafo_mat(void)
 {
