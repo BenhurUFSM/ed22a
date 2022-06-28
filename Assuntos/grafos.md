@@ -250,34 +250,37 @@ bool acha_ciclo(int n_nos, int grafo[n_nos][n_nos],
 Para o caso de grafos direcionados, a detecção é um pouco mais complexa. O ciclo é detectado se durante o percurso se chega a um nó que faz parte do percurso atual, e não a qualquer nó que já tenha sido visitado. Preciasmos distinguir entre 3 estados de cada nó: ainda não visitado, em visita (ainda não se terminou de visitar os seus adjacentes) e já visitados (após o percurso de todos seus adjacentes). Só se detecta um ciclo quando se chega em um nó que está "em visita", porque quer dizer que se chegou de novo a esse nó durante a visita a seus adjacentes. Quando se chega a um nó já visitado, quer dizer simplesmente que tem mais de um caminho para se chegar ao mesmo nó, não que haja um ciclo.
 O código pode ser então:
 ```c
+typedef enum { nao_visitado, em_visita, ja_visitado} marca_t;
 bool aciclico(int n_nos, int grafo[n_nos][n_nos])
 {
-  enum { NV=0, EV, JV} marca[n_nos];
-  for (int no = 0; no < n_nos; no++) marca[no] = NV;  // todos marcados como não visitados
+  marca_t marca[n_nos];
+  for (int no = 0; no < n_nos; no++) marca[no] = nao_visitado;  // todos marcados como não visitados
   for (int no = 0; no < n_nos; no++) {
-    if (marca[no] != NV) continue;
-    if (acha_ciclo(n_nos, grafo, marcado, no)) return false;
+    if (marca[no] != nao_visitado) continue;
+    if (acha_ciclo(n_nos, grafo, marca, no)) return false;
   }
   return true;
 }
 
 bool acha_ciclo(int n_nos, int grafo[n_nos][n_nos], 
-                bool marcado[n_nos], int no)
+                marca_t marca[n_nos], int no)
 {
-  if (marca[no] == EV) return true;
-  if (marca[no] == JV) return false;
-  marca[no] = EV;
+  if (marca[no] == em_visita) return true;
+  if (marca[no] == ja_visitado) return false;
+  marca[no] = em_visita;
   for (int adj = 0; adj < n_nos; adj++) {
     if (grafo[no][adj] != 0) {
-      if (acha_ciclo(n_nos, grafo, marcado, adj)) return true;
+      if (acha_ciclo(n_nos, grafo, marca, adj)) return true;
     }
   }
-  marca[no] = JV;
+  marca[no] = ja_visitado;
   return false;
 }
 ```
 As marcas são mais comumente chamadas de coloração (branco, cinza e preto).
 Esse mesmo código pode ser usado em grafos não direcionados.
+
+O código visto em aula (após algumas correções) está em [gra.c](gra.c).
 
 <!--
 #### Grafos direcionados acíclicos (DAGs)
