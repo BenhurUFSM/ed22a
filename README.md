@@ -48,6 +48,7 @@ Os assuntos vistos em aula serão listados aqui.
 |   19 | 15jun | [Fila de prioridade](Assuntos/heap.md)
 |   20 | 20jun | conversa sobre o trabalho
 |   21 | 22jun | [Grafos](Assuntos/grafos.md)
+|   22 | 27jun | [Implementação de grafos](Assuntos/grafos.md)
 
 <!--
 |    1 |  19mai | introdução
