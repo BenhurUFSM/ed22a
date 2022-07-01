@@ -49,6 +49,7 @@ Os assuntos vistos em aula serão listados aqui.
 |   20 | 20jun | conversa sobre o trabalho
 |   21 | 22jun | [Grafos](Assuntos/grafos.md)
 |   22 | 27jun | [Implementação de grafos](Assuntos/grafos.md)
+|   23 | 29jun | [DAGs, ordem topológica](Assuntos/grafos.md)
 
 <!--
 |    1 |  19mai | introdução
