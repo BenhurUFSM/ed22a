@@ -281,26 +281,68 @@ bool acha_ciclo(int n_nos, int grafo[n_nos][n_nos],
 As marcas são mais comumente chamadas de coloração (branco, cinza e preto).
 Esse mesmo código pode ser usado em grafos não direcionados.
 
+Outra forma de detecção de ciclos é baseada na idéia de que um nó que pertence a um ciclo obrigatoriamente tem pelo menos uma aresta de chegada e uma de saída (o grau de entrada e o grau de saída de um nó pertencente a um ciclo não podem ser 0).
+A idéia é remover do grafo todo nó que tenha grau de entrada (ou saída) 0. Após remover um desses nós, as arestas que partem (ou chegam) dele são removidas, diminuindo o grau de entrada (ou saída) de outros nós. Se não se conseguir remover todos os nós, é porque o grafo tem um ciclo.
+
+Abaixo tem uma implementação dessa idéia, com grafo implementado por matriz de adjacências, considerando o grau de entrada dos nós. A implementação considerando grau de saída seria muito semelhante.
+Em vez de destruir o grafo retirando nós, essa implementação mantém um vetor com o grau de entrada de cada nó, que vão sendo alterados conforme cada nó com grau de entrada zero é analisado. Os nós que já foram identificados com grau de entrada 0 e ainda não foram analisados são mantidos em uma fila.
+```c
+bool aciclico_grau_entrada(int n_nos, bool grafo[n_nos][n_nos])
+{
+  // inicializa um vetor com o grau de entrada dos nós
+  int ge[n_nos];
+  for (int no=0; no<n_nos; no++) {
+    ge[no] = 0;
+    // incrementa o GE do nó para cada aresta que chega nele
+    for (int no2=0; no2<n_nos; no2++) {
+      if (grafo[no2][no]) ge[no]++;
+    }
+  }
+  // inicializa uma fila com todos os nós que têm GE 0
+  fila f = fila_cria();
+  for (int no=0; no<n_nos; no++) {
+    if (ge[no] == 0) {
+      fila_insere(f, no);
+    }
+  }
+  int analisados = 0;  // conta o número de nós analisados (que têm GE 0)
+  while (!fila_vazia(f)) {
+    int no = fila_remove(f);
+    // decrementa o GE de cada nó destino de uma aresta que parte do nó analisado
+    // insere na fila se o GE ficou 0
+    for (int no2=0; no2<n_nos; no2++) {
+      if (grafo[no][no2]) {
+        ge[no2]--;
+        if (ge[no2] == 0) fila_insere(f, no2);
+      }
+    }
+    analisados++;
+  }
+  fila_destroi(f);
+  // se todos os nós foram analisados, o grafo é acíclico.
+  return analisados == n_nos;
+}
+```
+
 O código visto em aula (após algumas correções) está em [gra.c](gra.c).
 
-<!--
 #### Grafos direcionados acíclicos (DAGs)
 
 Uma subclasse bastante importante de grafos são os DAGs, grafos direcionados acíclicos. Por exemplo, toda árvore é um DAG. Um DAG pode ser usado para modelar dependências, como em uma sequência de tarefas, em que umas dependem das outras -- pré-requisitos em disciplinas, restrições na ordem de colocação de roupas, dependências entre arquivos em uma IDE, por exemplo.
 
-Por exemplo, considere a tarefa de se vestir. Você tem um conjunto de vestimentas (sapato, meia, calça, cueca ou calcinha, cinto, camisa, casaco), e algumas restrições na ordem em que essas vestimentas podem ser colocadas (meia antes do sapato, por exemplo). O problema é encontrar uma ordem em que as vestimentas podem ser vestidas sem quebrar nenhuma restrição e acabar como o super-homem, com as cuecas por cima das calças.
+Por exemplo, considere a tarefa de se vestir. Você tem um conjunto de vestimentas (sapato, meia, calça, cueca, cinto, camisa, casaco), e algumas restrições na ordem em que essas vestimentas podem ser colocadas (meia antes do sapato, por exemplo). (Admito que é um exemplo um pouco sexista, mas foi o que apareceu). O problema é encontrar uma ordem em que as vestimentas podem ser vestidas sem quebrar nenhuma restrição e acabar como o super-homem, com as cuecas por cima das calças.
 
 Esse problema pode ser modelado por um grafo, em que as peças de vestuário são os vértices e as dependências as arestas (se a meia deve vir antes do sapato, tem uma aresta de meia para sapato).
 As arestas poderiam ser:
 ```
 meia->sapato
 calça->sapato
-cueca ou calcinha->calça
+cueca->calça
 calça->cinto
 camisa->casaco
 camisa->cinto
 ```
-Existem várias ordens possíveis, como [meia, cueca ou calcinha, calça, camisa, cinto, sapato, casaco] ou [cueca ou calcinha, calça, camisa, casaco, cinto, meia, sapato].
+Existem várias ordens possíveis, como [meia, cueca, calça, camisa, cinto, sapato, casaco] ou [cueca, calça, camisa, casaco, cinto, meia, sapato].
 Uma ordem como essa é chamada **ordem topológica**, e só é possível se o grafo não contiver ciclos.
 
 Dado um grafo, como encontrar uma ordem topológica?
@@ -311,88 +353,108 @@ A ideia é executar qualquer uma das ações com grau de entrada 0 (ou colocá-l
 
 O algoritmo seria:
 ```
-   1. cria uma lista vazia
+   1. cria uma fila vazia
    2. encontre um nó com grau de entrada 0
-   3. insira esse nó no final da lista
-   4. remova esse nó do grafo
+   3. insira esse nó no final da fila
+   4. remova esse nó do grafo (e as arestas que partem dele)
    5. repita os passos 2 a 4 até remover todos os nós do grafo
+   6. a fila contém uma ordem topológica (ou o grafo contém ciclo, se sobraram nós)
 ```
 Claro, para implementar o algoritmo não precisa realmente destruir o grafo (apesar de ser uma implementação possível: copie o grafo e destrua a cópia).
 Pode-se usar estruturas auxiliares para manter o grau de entrada de todos os nós, e uma fila auxiliar com os nós que já foram identificados com grau zero mas que ainda não foram colocados na fila de saída (só colocamos na fila de saida depois de alterar os graus de entrada dos nós adjacentes).
-O algoritmo poderia ser implementado pela seguinte função (supondo um TAD grafo implementado com listas de adjacências):
+
+O algoritmo está implementado na função abaixo, para um grafo implementado com matriz de adjacências
+(é praticamente igual à função de detecção de ciclos vista anteriormente).
+Como ele é implementado com uma fila para manter os nós que já foram detectados com grau de entrada 0 e ainda não analisados, os nós saem dessa fila na mesma ordem em que entram. Uma ordem diferente de saida dessa fila resultaria em ordens topológicas diferentes, em grafos em que mais de uma ordem é possível. Em particular, se os nós (ou as arestas) têm prioridades, a fila poderia ser uma fila de prioridade.
 ```c
-  fila ordem_topologica(grafo g)
-  {
-    fila ordem = fila_cria();
-    fila aux = fila_cria();
-    int n_nos = grafo_num_vertices(g);
-    // inicializa os graus de entrada
-    int grau_ent[n_nos] = { 0 };
-    for (int n=0; n<n_nos; n++) {
-      lista l = grafo_vizinhos(g, n);
-      int adj;
-      for (int i=0; lista_dado(l, i, &adj); i++) {
-        grau_ent[adj]++;
-      }
+fila ordem_topologica(int n_nos, bool grafo[n_nos][n_nos])
+{
+  // inicializa um vetor com o grau de entrada dos nós
+  int ge[n_nos];
+  for (int no=0; no<n_nos; no++) {
+    ge[no] = 0;
+    // incrementa o GE do nó para cada aresta que chega nele
+    for (int no2=0; no2<n_nos; no2++) {
+      if (grafo[no2][no]) ge[no]++;
     }
-    // insere todos os nós com grau de entrada 0 na fila auxiliar
-    for (int i=0; i<n_nos; n++) if (grau_ent[i] == 0) fila_insere(aux, i);
-    // pega cada nó da fila auxiliar e move para a saida; altera graus
-    while (!fila_vazia(aux)) {
-      int n = fila_remove(aux);
-      fila_insere(ordem, n);
-      lista l = grafo_vizinhos(g, n);
-      int adj;
-      for (int i=0; lista_dado(l, i, &adj); i++) {
-        grau_ent[adj]--;
-        // se o grau chegou a zero, já pode ser usado
-        if (grau_ent[adj] == 0) fila_insere(aux, adj);
-      }
-    }
-    fila_destroi(aux);
-    if (fila_num_elem(ordem) != n_nos) {
-      // erro, grafo contem ciclo -- retorna uma fila vazia
-      fila_destroi(ordem);
-      ordem = NULL;
-    }
-    return ordem;  // deve ser destruida depois de usada
   }
+  // inicializa uma fila com todos os nós que têm GE 0
+  fila f = fila_cria();
+  for (int no=0; no<n_nos; no++) {
+    if (ge[no] == 0) {
+      fila_insere(f, no);
+    }
+  }
+  // inicializa uma fila que conterá os nós em ordem topológica
+  fila ordem = fila_cria();
+  int ordenados = 0;  // conta o número de nós na fila ordem
+  while (!fila_vazia(f)) {
+    int no = fila_remove(f);
+    // decrementa o GE de cada nó destino de uma aresta que parte do nó analisado
+    // insere na fila se o GE ficou 0
+    for (int no2=0; no2<n_nos; no2++) {
+      if (grafo[no][no2]) {
+        ge[no2]--;
+        if (ge[no2] == 0) fila_insere(f, no2);
+      }
+    }
+    fila_insere(ordem, no);
+    ordenados++;
+  }
+  fila_destroi(f);
+  if (ordenados != n_nos) {
+    // o grafo tem ciclo, não tem ordem topológica
+    fila_esvazia(ordem);
+  }
+  return ordem;
+}
 ```
 
 A outra forma comum de se gerar uma ordem topológica é com um percurso em profundidade.
 A idéia é que quando se retorna de um nó em um percurso em profundidade, todos os nós atingíveis a partir dele (todos os nós que dependem dele) já foram visitados -- é o contrário do que se quer.
 Logo dá para gerar uma ordem topológica invertida.
 Colocando os elementos encontrados em uma pilha, automaticamente se tem a inversão de ordem quando os nós forem retirados da pilha.
-O código de percurso em profundidade anterior poderia ser alterado da seguinte forma:
+O código de detecção de ciclos por percurso em profundidade anterior poderia ser alterado para gerar uma ordem topológica da seguinte forma:
 ```c
-pilha ordem_topologica(int n_nos, int grafo[n_nos][n_nos])
+typedef enum { nao_visitado, em_visita, ja_visitado} marca_t;
+
+bool percorre_prof(int n_nos, bool grafo[n_nos][n_nos], 
+                   marca_t marca[n_nos], int no, pilha ordem)
 {
-  bool marcado[n_nos];
-  for (int no = 0; no < n_nos; no++) marcado[no] = false;  // todos desmarcados
+  if (marca[no] == em_visita) return false;  // detectou um ciclo!
+  if (marca[no] == ja_visitado) return true;
+  marca[no] = em_visita;
+  for (int adj = 0; adj < n_nos; adj++) {
+    if (grafo[no][adj]) {
+      if (acha_ciclo(n_nos, grafo, marca, adj)) return true;
+    }
+  }
+  pilha_insere(ordem, no); // já visitou todos os nós que dependem deste
+  marca[no] = ja_visitado;
+  return true;
+}
+
+pilha ordem_topologica(int n_nos, bool grafo[n_nos][n_nos])
+{
   pilha ordem = pilha_cria();
+  marca_t marca[n_nos];
+  for (int no = 0; no < n_nos; no++) marca[no] = nao_visitado;  // todos marcados como não visitados
   for (int no = 0; no < n_nos; no++) {
-    if (!marcado[no]) {
-      profundidade(n_nos, grafo, marcado, no, ordem);
+    if (marca[no] == nao_visitado) {
+      if (!profundidade(n_nos, grafo, marca, no, ordem)) {
+        // detectou um ciclo
+        pilha_esvazia(ordem);
+        break;
+      }
     }
   }
   return ordem; // deve ser destruída por quem recebe
 }
-
-void profundidade(int n_nos, int grafo[n_nos][n_nos], 
-                  bool marcado[n_nos], int no, pilha ordem)
-{
-  if (marcado[no]) return; // ciclo -- poderia por tratamento de erro aqui.
-  marcado[no] = true;
-  for (int adj = 0; adj < n_nos; adj++) {
-    if (grafo[no][adj] != 0) {
-      profundidade(n_nos, grafo, marcado, adj, ordem);
-    }
-  }
-  // já visitou todos os nós atingíveis a partir deste -> insere na pilha
-  pilha_empilha(ordem, no);
-}
 ```
 
+O código visto em aula está em [gra2.c](gra2.c).
+
+<!--
 #### Árvore geradora
 
 Uma árvore é um grafo não orientado, acíclico, conexo. Uma árvore com N nós possui N-1 arestas. Se se adiciona uma nova aresta, será gerado um ciclo. Se se remove uma aresta, o grafo deixa de ser conexo. Se o grafo é orientado, deve possuir um único nó que é fonte (só tem arestas que saem nele): esse nó é a raiz da árvore, dita "racinada".
