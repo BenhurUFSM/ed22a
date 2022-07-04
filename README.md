@@ -50,6 +50,7 @@ Os assuntos vistos em aula serão listados aqui.
 |   21 | 22jun | [Grafos](Assuntos/grafos.md)
 |   22 | 27jun | [Implementação de grafos](Assuntos/grafos.md)
 |   23 | 29jun | [DAGs, ordem topológica](Assuntos/grafos.md)
+|   24 |  4jul | [árvore geradora de custo mínimo](Assuntos/grafos.md)
 
 <!--
 |    1 |  19mai | introdução
