@@ -454,6 +454,14 @@ pilha ordem_topologica(int n_nos, bool grafo[n_nos][n_nos])
 
 O código visto em aula está em [gra2.c](gra2.c).
 
+#### Exercícios
+
+1. Quais as ordens topológicas possíveis para os nós (A a F) do grafo representado pelas arestas:
+   ```
+   A->B, B->C, C->D, A->D, E->F, F->C
+   ```
+2. No grafo do exercício anterior, cada aresta representa uma ação que demora tempo 1 para ser realizada; ações podem ser realizadas concorrentemente; uma ação só pode ser realizada após todas as que a precedem no grafo. Qual o tempo mínimo para realizar todas as ações representadas no grafo?
+
 <!--
 #### Árvore geradora
 
