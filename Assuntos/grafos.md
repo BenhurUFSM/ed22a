@@ -462,7 +462,6 @@ O código visto em aula está em [gra2.c](gra2.c).
    ```
 2. No grafo do exercício anterior, cada aresta representa uma ação que demora tempo 1 para ser realizada; ações podem ser realizadas concorrentemente; uma ação só pode ser realizada após todas as que a precedem no grafo. Qual o tempo mínimo para realizar todas as ações representadas no grafo?
 
-<!--
 #### Árvore geradora
 
 Uma árvore é um grafo não orientado, acíclico, conexo. Uma árvore com N nós possui N-1 arestas. Se se adiciona uma nova aresta, será gerado um ciclo. Se se remove uma aresta, o grafo deixa de ser conexo. Se o grafo é orientado, deve possuir um único nó que é fonte (só tem arestas que saem nele): esse nó é a raiz da árvore, dita "racinada".
@@ -489,7 +488,7 @@ Imagine que separamos nosso grafo em duas partições: alguns dos nós para um l
 
 #### Algoritmo de Prim
 
-Este algoritmo funciona fazendo crescer uma árvore, desde um único nó até que ela tenha todos os nós do grafo. A cada passo do algoritmo é acrescentada uma das arestar do grafo, que faz a árvore crescer um nó.
+Este algoritmo funciona fazendo crescer uma árvore, desde um único nó até que ela tenha todos os nós do grafo. A cada passo do algoritmo é acrescentada uma das arestas do grafo, que faz a árvore crescer um nó.
 O algoritmo começa em um nó qualquer da árvore, e a cada passo, escolhe, entre as arestas que partem de um dos nós que já estão na árvore e chegam em algum dos nós que ainda não estão nela, aquele de menos peso (caso exista mais de um, qualquer deles serve). Essa aresta e o nó que ela conecta são acrescentados na árvore.
 Esse processo se repete até que a árvore contenha todos os nós do grafo.
 
@@ -518,7 +517,7 @@ Uma forma de se implementar esse algoritmo é com o uso de três vetores com uma
   }
 ```
 
-Para acelerar a operação de encontrar o nó não visitado de menor custo, geralmente se usa uma estrutura de dados chamada "fila de prioridades" (que vai ser vista no semestre "presencial"), que funciona como uma fila, mas associado a cada elemento tem uma prioridade, e quando se remove, sempre sai o elemento de maior prioridade entre os que estão na fila. No caso, maior prioridade é menor custo.
+Para acelerar a operação de encontrar o nó não visitado de menor custo, geralmente se usa uma "fila de prioridades", que funciona como uma fila, em que cada elemento tem uma prioridade, e sempre que se remove um elemento da fila, se obtém o de maior prioridade entre os que estão na fila. Para o algoritmo de Prim, a maior prioridade é dada pelo menor custo.
 
 #### Algoritmo de Kruskal
 
@@ -549,7 +548,7 @@ O algoritmo de Kruskal pode então ser escrito assim:
 ```c
 grafo kruskal(grafo g) {
   grafo resultado = cria_grafo_vazio();
-  for (n = cada nó em g) insere_no(g, n);
+  for (n = cada nó em g) insere_no(resultado, n);
   inicializa_chefes(resultado);
   lista_ordenada_de_arestas l;
   for (a = cada aresta em g) insere(l, a);
@@ -567,6 +566,7 @@ grafo kruskal(grafo g) {
 ```
 
 
+<!--
 #### Caminho mais curto
 
 Em um grafo ponderado, o comprimento de um caminho é a soma dos pesos das arestas que constituem esse caminho. O caminho mais curto entre dois nós do grafo é o caminho que tem o menor comprimento, entre todos os caminhos que unem esses nós.
