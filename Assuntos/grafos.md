@@ -566,7 +566,7 @@ grafo kruskal(grafo g) {
 ```
 
 
-<!--
+
 #### Caminho mais curto
 
 Em um grafo ponderado, o comprimento de um caminho é a soma dos pesos das arestas que constituem esse caminho. O caminho mais curto entre dois nós do grafo é o caminho que tem o menor comprimento, entre todos os caminhos que unem esses nós.
@@ -669,4 +669,4 @@ floyd_marshall(grafo G)
 1. Considere o grafo orientado com as arestas *ae,af,al,be,bi,bc,cf,cg,cj,dc,dg,dn,eh,fi,fm,gf,ih,jk,jl,kn,mj*, dê uma possível ordenação topológica para os nós do grafo.
 2. Aplique os algoritmos de Prim e de Kruskal no grafo não orientado com as arestas *ab4,ah8,bh11,bc8,hi7,ic2,hg1,ig6,cd7,cf4,gf2,df14,de9,fe10*, partindo do nó *a*.
 3. Aplique o algoritmo de Floyd-Warshall ao grafo orientado com arestas *ab0,bc4,cd1,da6,db5*. Compare as distâncias obtidas com o algoritmo de Dijkstra, partindo de cada nó.
--->
+
