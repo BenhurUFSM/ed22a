@@ -1,5 +1,7 @@
 # ed22a - Estruturas de Dados
 
+# Não tem aula na semana 25-29 jul
+
 ELC1066 DLSC/CT/UFSM\
 turmas SI2 e CC2, primeiro semestre 2022\
 professor: Benhur Stein 
@@ -52,6 +54,10 @@ Os assuntos vistos em aula serão listados aqui.
 |   23 | 29jun | [DAGs, ordem topológica](Assuntos/grafos.md)
 |   24 |  4jul | [árvore geradora de custo mínimo](Assuntos/grafos.md)
 |   25 |  6jul | [caminho mais curto](Assuntos/grafos.md)
+|   26 | 11jul | trabalhos
+|   27 | 13jul | trabalhos
+|   28 | 18jul | trabalhos
+|   29 | 20jul | trabalhos
 
 <!--
 |    1 |  19mai | introdução
