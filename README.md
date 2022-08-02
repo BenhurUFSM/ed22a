@@ -58,6 +58,7 @@ Os assuntos vistos em aula serão listados aqui.
 |   27 | 13jul | trabalhos
 |   28 | 18jul | trabalhos
 |   29 | 20jul | trabalhos
+|   30 | 1ago  | trabalhos
 
 <!--
 |    1 |  19mai | introdução
@@ -96,6 +97,9 @@ Os assuntos vistos em aula serão listados aqui.
 |   t3  | ASD      | [calculadora de expressões](Trabalhos/t3.md)
 |   t4  | ASD      | [edb](Trabalhos/t4.md)
 |   t5  | ASD      | [caminho mais curto](Trabalhos/t5.md)
+| final | 12ago    | [entrega final](Trabalhos/final.md)
+| apresentações | 15 ou 17 ago |
+| exame | 24ago |
 
 <!--
 |    t1 |  9jun10h | ver [aula 3](https://github.com/BenhurUFSM/ed21a/blob/main/Assuntos/03.md)
