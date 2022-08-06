@@ -1,11 +1,5 @@
 # ed22a - Estruturas de Dados
 
-* * *
-# Não tem aula presencial dia 3ago
-
-O professor está adoentecido, e já teve 30 aulas, e não tem aparecido muita gente; dúvidas etc continuam podendo ser enviadas por mail.
-* * *
-
 ELC1066 DLSC/CT/UFSM\
 turmas SI2 e CC2, primeiro semestre 2022\
 professor: Benhur Stein 
