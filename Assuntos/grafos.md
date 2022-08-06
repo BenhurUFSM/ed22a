@@ -642,7 +642,7 @@ Por exemplo, considere o grafo orientado contendo *V={a,b,c}* e *E={(a,a,2), (a,
 
 O algoritmo pode ser escrito assim:
 ```c
-floyd_marshall(grafo G)
+floyd_warshall(grafo G)
 {
    n = num_nos(G)
    matriz D[n][n] = { infinitos }
