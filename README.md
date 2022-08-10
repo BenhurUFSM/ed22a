@@ -95,8 +95,8 @@ Os assuntos vistos em aula serão listados aqui.
 |   t3  | ASD      | [calculadora de expressões](Trabalhos/t3.md)
 |   t4  | ASD      | [edb](Trabalhos/t4.md)
 |   t5  | ASD      | [caminho mais curto](Trabalhos/t5.md)
-| final | 12ago    | [entrega final](Trabalhos/final.md)
-| apresentações | 15 ou 17 ago |
+| final | 15ago, manhã    | [entrega final](Trabalhos/final.md)
+| apresentações | 17 ago |
 | exame | 24ago |
 
 <!--
